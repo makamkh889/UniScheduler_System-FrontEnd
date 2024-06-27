@@ -1,0 +1,83 @@
+<mat-drawer-container class="example-container" autosize>
+    <mat-drawer #draweremail class="example-sidenav" mode="side">
+
+        <!-- src/app/components/email-form/email-form.component.html -->
+
+        <form [formGroup]="emailForm" (ngSubmit)="onSubmit()">
+
+            <mat-form-field class="half-width">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email">
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+                <mat-label>Subject</mat-label>
+                <input matInput formControlName="subject">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Body</mat-label>
+                <input matInput formControlName="body">
+            </mat-form-field>
+
+            <button [disabled]="emailForm.invalid" color="Saveform" class="full-width" type="submit">Save</button>
+        </form>
+
+    </mat-drawer>
+
+    <!-- add hall -->
+    <mat-drawer #drawerhall class="example-sidenav" mode="side">
+
+        <!-- src/app/components/email-form/email-form.component.html -->
+        <form [formGroup]="HallForm" (ngSubmit)="onSubmitHallForm()">
+
+            <mat-form-field class="half-width">
+                <mat-label>Capacity</mat-label>
+                <input matInput formControlName="Capacity">
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+                <mat-label>HallName</mat-label>
+                <input matInput formControlName="HallName">
+            </mat-form-field>
+
+            <button [disabled]="HallForm.invalid" color="Saveform" class="full-width" type="submit">Save</button>
+        </form>
+
+    </mat-drawer>
+
+    <!-- add department -->
+    <mat-drawer #drawerdepartment class="example-sidenav" mode="side">
+
+        <!-- src/app/components/email-form/email-form.component.html -->
+        <form [formGroup]="DepartmentForm" (ngSubmit)="onSubmitDepatmentForm()">
+
+            <mat-form-field class="half-width">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="Name">
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+                <mat-label>Level</mat-label>
+                <input matInput formControlName="Level">
+            </mat-form-field>
+
+            <button [disabled]="DepartmentForm.invalid" color="Saveform" class="full-width" type="submit">Save</button>
+        </form>
+
+    </mat-drawer>
+
+
+    <div class="example-sidenav-content">
+        <button type="button" mat-button (click)="draweremail.toggle()">
+            <img src="assets/send-data.png" class="icon" alt="Icon" style="width: 40px; height: 40px;">
+        </button>
+        <button type="button" mat-button (click)="drawerhall.toggle()">
+            <img src="assets/seminar.png" class="icon" alt="Icon" style="width: 46px; height: 46px;">
+        </button>
+        <button type="button" mat-button (click)="drawerdepartment.toggle()">
+            <img src="assets/join.png" class="icon" alt="Icon" style="width: 40px; height: 40px;">
+        </button>
+    </div>
+
+</mat-drawer-container>

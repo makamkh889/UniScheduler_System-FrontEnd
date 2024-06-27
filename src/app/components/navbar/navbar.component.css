@@ -1,0 +1,43 @@
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #100029;
+    padding: 10px 10px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-image {
+    width: 100px;
+    height: 65px;
+}
+
+.header-title {
+    font-size: 20px;
+    font-weight: 100;
+    color: #ffffff;
+    /* Changed to white for better visibility against dark background */
+}
+
+.header-center {
+    flex-grow: 1;
+    /* This will push the nav-tabs to the center */
+    display: flex;
+    justify-content: right;
+    padding-right: 50px;
+}
+
+.social-link {
+    color: #ffffff;
+    font-size: 24px;
+    margin: 15px;
+
+}
+
+.social-link:hover {
+    color: #cccccc;
+}

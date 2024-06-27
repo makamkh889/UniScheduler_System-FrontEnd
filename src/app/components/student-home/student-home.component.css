@@ -1,0 +1,111 @@
+body{
+    height: 100%;
+    display:flex;
+}
+.container-lg {
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.table-wrapper {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.table-title {
+    background: #848393;
+    color: #fff;
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 10px;
+}
+
+.table-title h2 {
+    margin: 6px 0 0;
+    font-size: 22px;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 3px;
+    border: none;
+}
+
+.btn-info {
+    background-color: #5bc0de;
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #31b0d5;
+}
+
+.btn-cancel {
+    background-color: #31b0d5;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.mat-form-field {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.btn-icon {
+    padding: 8px;
+    /* Adjust padding as needed */
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.btn-success {
+    color: #26a269;
+    /* Green color */
+}
+
+.btn-danger {
+    color: #bb1616;
+    /* Red color */
+}
+
+.btn-icon:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    /* Light background on hover */
+}
+
+.fa-solid {
+    font-size: 18px;
+    /* Adjust icon size as needed */
+}
+
+.d-flex {
+    display: flex;
+    align-items: center;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.course-select {
+    flex: 1;
+    margin-right: 1rem;
+    /* Adjust as needed */
+}
+
+.btn-icon {
+    margin-left: 0.5rem;
+    /* Adjust as needed */
+}

@@ -1,0 +1,104 @@
+<div class="container-lg">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <h2>{{currentStudent.name}}</h2>
+                    </div>
+                    <div class="col-sm-4 d-flex justify-content-end">
+                        <button type="button" class="btn btn-info add-new me-2" (click)="Register()">
+                            Register
+                        </button>
+                        <button type="button" class="btn btn-info add-new me-2" (click)="GetSchedule()">
+                            Schedule
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="selecttime d-flex align-items-center justify-content-between">
+                <ng-container *ngIf="RegisterMode">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <!-- Course Selection -->
+                        <mat-form-field appearance="fill" class="course-select">
+                            <mat-label>Course</mat-label>
+                            <mat-select [(value)]="selectedCourseCode">
+                                <ng-container *ngFor="let course of courses">
+                                    <mat-option [value]="course.courseCode">
+                                        {{ course.courseName }}
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <!-- Buttons -->
+                        <div class="d-flex align-items-center">
+                            <button class="btn btn-icon btn-success btn-place" (click)="AddCourseOption()">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                            <button class="btn btn-icon btn-success" (click)="SaveCourse()">
+                                <i class="fa-solid fa-square-check"></i>
+                            </button>
+                            <button class="btn btn-icon btn-danger" (click)="CancelRegister()">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+            <ng-container *ngIf="Showtable">
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-icon btn-danger" (click)="CancelSchedule()">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Sunday</th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let time of TimeData">
+                            <td>{{ time }}</td>
+                            <td *ngFor="let day of ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday']">
+                                <ng-container *ngIf="myData[day][time].isDuplicate; else notDuplicate">
+                                    <button type="button" class="btn btn-link" (click)="toggleCourseDetails(day, time)">
+                                        <span style="color: red;">Duplicate Courses</span>
+                                    </button>
+                                    <div [id]="day + '-' + time + '-details'" class="collapse">
+                                        <ng-container *ngFor="let course of myData[day][time].courseName.split(',')">
+                                            <div *ngIf="course.trim() !== '-'">
+                                                <p>{{ course.trim() }}</p>
+                                                <p>Dr: {{ myData[day][time].doctorName }}</p>
+                                                <p>Hall: {{ myData[day][time].hall }}</p>
+                                                <p>Code: {{ myData[day][time].courseCode }}</p>
+                                                <hr>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </ng-container>
+                                <ng-template #notDuplicate>
+                                    <button type="button" class="btn btn-link" (click)="toggleCourseDetails(day, time)">
+                                        {{ myData[day][time].courseName }}
+                                    </button>
+                                    <div [id]="day + '-' + time + '-details'" class="collapse">
+                                        <p>Dr: {{ myData[day][time].doctorName }}</p>
+                                        <p>Hall: {{ myData[day][time].hall }}</p>
+                                        <p>Code: {{ myData[day][time].courseCode }}</p>
+                                    </div>
+                                </ng-template>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-container>
+        </div>
+    </div>
+</div>

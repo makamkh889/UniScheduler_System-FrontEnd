@@ -1,0 +1,152 @@
+.top-right {
+    position:absolute;
+    top: 15px;
+    right: 10px;
+    z-index: 1000;
+    /* Ensures the button is on top of other elements */
+}
+.side-nav-left {
+    position: fixed !important;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: transparent;
+}
+
+.side-nav-content {
+    z-index: 1002;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 100%;
+    padding: 30px;
+    overflow: auto;
+    overflow-y: none;
+    box-shadow: 0 2px 14px 0 rgba(130, 130, 130, 0.5);
+    background: #cbc0cf;
+    color: #555555 !important;
+}
+
+.backdrop {
+    position: fixed !important;
+    z-index: 1001;
+    height: 100%;
+    width: 100%;
+}
+
+.mat-drawer {
+    box-shadow: unset !important;
+}
+/* ///////////////////////////////////////////////////////////////// */
+
+form {
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.half-width {
+    width: 48%;
+    margin: 10px 1%;
+    display: inline-block;
+}
+
+form button img {
+    display: contents;
+    justify-content: center;
+    background-color: #f0a70a;
+    color: black;
+    cursor: pointer;
+}
+
+.full-width {
+    width: 100%;
+    margin: 10px 0;
+}
+
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: #9b95f5;
+    padding: 100px;
+    background-image: url('/assets/homeimage.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.admin-greeting {
+    font-size: 240px;
+    font-weight:bolder;
+    text-align: left;
+    margin-left: 50px;
+    color: #fff;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+}
+
+.admin-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #6c6b6d;
+    color: #fff;
+    border:0cm;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.5s ease, transform 0.5s ease;
+    width: 100%;
+    max-width: 300px;
+    /* Ensure buttons don't get too wide */
+}
+
+.admin-button:hover {
+    background-color: #4d0166;
+    transform: translateY(-7px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.admin-button:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+
+@media (max-width: 768px) {
+    .admin-container {
+        padding: 50px;
+        /* Reduce padding on smaller screens */
+    }
+
+    .admin-greeting {
+        font-size: 20px;
+        margin-left: 20px;
+    }
+
+    .button-container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .admin-button {
+        font-size: 14px;
+        padding: 8px 16px;
+        max-width: 100%;
+        /* Allow buttons to be as wide as needed */
+    }
+    
+}

@@ -1,0 +1,24 @@
+<!-- src/app/component/home/home.component.html -->
+@if(showHome){
+<button class="top-right" (click)="navigateTo('AdminLogin')">
+  <img src="assets/user-profile.png" class="icon-button" style="width: 40px; height: 40px;" alt="Settings Icon" />
+</button>
+<div class="home-container">
+
+  <div class="content">
+
+    <h1>FCI ASSIUT UNIVERSITY</h1>
+    <div class="buttonsbig">
+      <button class="btn btn-primary" (click)="navigateTo('StudentLogin')">
+        Student
+      </button>
+      <button class="btn btn-secondary" (click)="navigateTo('DoctorLogin')">
+        Doctor
+      </button>
+    </div>
+  </div>
+</div>
+
+} @else{
+<router-outlet></router-outlet>
+}

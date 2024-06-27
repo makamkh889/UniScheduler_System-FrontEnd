@@ -1,0 +1,166 @@
+.container-lg {
+    padding: 20px;
+    margin: 0 auto;
+}
+
+.table-responsive {
+    display: flex;
+    flex-direction: column;
+    overflow-x: auto;
+}
+
+.table-wrapper {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    overflow-x: auto;
+}
+
+.table-title {
+    background: #848393;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 10px;
+}
+
+.table-title h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 3px;
+    border: none;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-info {
+    background-color: #5bc0de;
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #31b0d5;
+}
+
+.btn-cancel {
+    background-color: #31b0d5;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.mat-form-field {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.btn-icon {
+    padding: 8px;
+    /* Adjust padding as needed */
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.btn-success {
+    color: #26a269;
+    /* Green color */
+}
+
+.btn-danger {
+    color: #bb1616;
+    /* Red color */
+}
+
+.btn-icon:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    /* Light background on hover */
+}
+
+.fa-solid {
+    font-size: 18px;
+    /* Adjust icon size as needed */
+}
+
+.table-wrapper table {
+    width: 100%;
+    /* Make sure table takes full width of its container */
+    table-layout: fixed;
+    /* Fix the table layout */
+}
+
+.table-wrapper th,
+.table-wrapper td {
+    white-space: nowrap;
+    /* Prevent text from wrapping */
+}
+
+@media (max-width: 768px) {
+
+    .table-wrapper th,
+    .table-wrapper td {
+        white-space: normal;
+        /* Allow text to wrap on smaller screens */
+        font-size: 14px;
+        /* Adjust font size for better readability */
+    }
+
+    .btn {
+        font-size: 12px;
+        padding: 8px 16px;
+    }
+}
+
+/* Example CSS to improve table appearance */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+    overflow-wrap: break-word;
+    /* Ensure text wraps instead of overflowing */
+}
+
+.btn-link {
+    text-align: left;
+    /* Adjust button alignment */
+    padding: 0;
+}
+
+table p {
+    font-size: smaller;
+    /* Adjust font size as needed */
+}
+
+.collapse {
+    display: none;
+}
+
+.collapse.show {
+    display: block;
+}
+
+.course-details {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    color: #333;
+}
+
+.course-details {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    color: #333;
+}

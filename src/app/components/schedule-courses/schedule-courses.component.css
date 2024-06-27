@@ -1,0 +1,190 @@
+table {
+    width: 100%;
+}
+
+.custom-red-btn {
+    background-color: rgb(58, 9, 80);
+    color: white;
+    border-color: rgb(45, 12, 59);
+    /* Optional: if you want the border to match */
+}
+
+.custom-red-btn:hover {
+    background-color: rgb(45, 12, 59);
+    /* Optional: darker shade on hover */
+    border-color: rgb(45, 12, 59);
+    /* Optional: darker shade on hover */
+}
+
+._formatebutton {
+    width: 100%;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    padding: 8px 0;
+    text-align: center;
+    border: 2px solid #ccc;
+    background-color: #f0f0f0;
+    color: rgb(58, 9, 80);
+    display: block;
+}
+
+table {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: separate;
+    /* Ensure space between borders */
+    border-spacing: 0;
+    /* Remove spacing between cells */
+    border: 2px solid #1c0221;
+    /* Outer border for the table */
+}
+
+/* Add padding to table cells */
+td,
+th {
+    padding: 15px 10px;
+    /* Adjust the vertical (top/bottom) padding value to increase space between rows */
+}
+
+/* Add a margin or height to rows */
+tr {
+    height: 50px;
+    /* Adjust this value to increase the overall height of the rows */
+}
+
+tr.example-detail-row {
+    height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+    background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+}
+
+.example-element-row td {
+    border-bottom-width: 0;
+}
+
+.example-element-detail {
+    overflow: hidden;
+    display: flex;
+}
+
+.example-element-diagram {
+    min-width: 80px;
+    border: 2px solid black;
+    padding: 8px;
+    font-weight: lighter;
+    margin: 8px 0;
+    height: 104px;
+}
+
+.example-element-symbol {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: normal;
+}
+
+.example-element-description {
+    padding: 16px;
+}
+
+.example-element-description-attribution {
+    opacity: 0.5;
+}
+
+.table-wrapper {
+    background: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.table-title {
+    background: #848393;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 10px;
+}
+
+.table-title h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.mat-elevation-z8 {
+    border-radius: 10px;
+}
+
+.mat-header-cell,
+.mat-cell {
+    text-align: center;
+    padding: 10px;
+}
+
+.mat-header-cell {
+    background: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+.mat-row {
+    border-bottom: 1px solid #ddd;
+}
+
+.mat-row:nth-child(even) {
+    background: #f2f2f2;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+td:last-child {
+    border-right: none;
+}
+
+th {
+    padding: 10px;
+    border-bottom: 2px solid #4CAF50;
+    border-right: 1px solid #ddd;
+}
+
+th:last-child {
+    border-right: none;
+}
+
+.table-buttons {
+    margin-bottom: 10px;
+}
+
+.table-buttons .btn {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+._formatebutton {
+    margin-right: 4px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+.FilterC {
+    margin-top: 15px;
+}

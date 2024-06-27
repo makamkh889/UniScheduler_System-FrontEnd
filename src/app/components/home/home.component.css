@@ -1,0 +1,49 @@
+.top-right {
+    position: absolute;
+    top: 15%;
+    right: 2%;
+    background: none;
+        border: none;
+    
+}
+
+
+.home-container {
+    background-image: url('/assets/homeimage.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-right: 10px;
+    /* box-sizing: border-box; */
+}
+
+.content {
+    text-align: right;
+    color: white;
+}
+
+.content h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.buttonsbig .btn{
+    font-size: 1rem;
+    padding: 0.8em 2em;
+    background-color: #000;
+    border: 3px solid rgb(174, 125, 230);
+    border-radius: 1em;
+    color: #fff;
+    font-weight: bolder;
+    transition: cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.4s;
+    box-shadow: -5px 5px 0px 0px rgb(174, 125, 230);
+    margin: 10px;
+        font-size: 1.2em;
+}
+
+button:hover {
+    transform: translate(5px, -5px);
+}

@@ -1,0 +1,61 @@
+<div class="container-lg">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <h2>Admin Management</h2>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-info add-new" (click)="addNewAdmin()">
+                            <i class="fa fa-plus"></i> Add New Admin
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Admin Name</th>
+                        <th>National ID</th>
+                        <th>Academic Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let admin of localAdmins">
+                        <td>
+                            <span *ngIf="!admin.editMode">{{ admin.adminName }}</span>
+                            <input *ngIf="admin.editMode" [(ngModel)]="EditedAdmin.name" placeholder="Your name"
+                                class="form-control" />
+                        </td>
+                        <td>
+                            <span *ngIf="!admin.AddedMode">{{ admin.nationalId }}</span>
+                            <input *ngIf="admin.AddedMode" [(ngModel)]="admin.nationalId" placeholder="Your national Id"
+                                class="form-control" />
+                        </td>
+                        <td>
+                            <span *ngIf="!admin.editMode">{{ admin.academicEmail }}</span>
+                            <input *ngIf="admin.editMode" [(ngModel)]="EditedAdmin.email"
+                                placeholder="Your Academic Email" class="form-control" />
+                        </td>
+                        <td>
+                            <button *ngIf="!admin.editMode" class="btn btn-cancel" (click)="ChangeMode(admin)">
+                                <i class="fa-regular fa-pen-to-square" style="color: #000000;"></i>
+                            </button>
+                            <button *ngIf="!admin.editMode" class="btn btn-cancel" (click)="deleteAdmin(admin)">
+                                <i class="fa-solid fa-trash" style="color: #e01b24;"></i>
+                            </button>
+                            <button *ngIf="admin.editMode" class="btn btn-cancel" (click)="check(admin)">
+                                <i class="fa-solid fa-square-check" style="color: #26a269;"></i>
+                            </button>
+                            <button *ngIf="admin.editMode" class="btn btn-cancel" (click)="cancelEdit(admin)">
+                                <i class="fa-solid fa-xmark" style="color: #000000;"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

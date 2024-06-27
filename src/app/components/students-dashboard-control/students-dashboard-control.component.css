@@ -1,0 +1,100 @@
+
+input[type="file"] {
+    display: none;
+}
+
+
+.file-upload-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   margin: 20px;
+   
+    /* Adjust as needed to center vertically */
+}
+
+.file-upload {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.file-input {
+    display: none;
+    /* Hide the file input, since we'll use a custom button */
+}
+
+.upload-btn {
+    margin-left: 10px;
+}
+
+
+
+.button-container {
+    display: flex;
+    margin: 10px;
+    justify-content:center;
+    margin-bottom: 10px;
+}
+
+.button-container button {
+    background-color: green;
+    margin: 15px;
+    color: white;
+    width: 200px;
+}
+i{
+      font-size: 17px;
+        margin: 0 5px;
+        cursor: pointer;
+}
+
+.form-container {
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.Filter-container{
+    border: 3px solid #ccc;
+        padding: 5px;
+        margin: 50px 300px;
+        border-radius: 8px;
+        display: flex;
+           
+}
+
+.Filter-container button{
+    height: 54px;
+}
+
+.full-width {
+    width: 100%;
+    margin: 10px 0;
+}
+
+.half-width {
+    width: 48%;
+    margin: 10px 1%;
+    display: inline-block;
+}
+
+.quarter-width {
+    width: 23%;
+    margin: 10px 1%;
+}
+
+
+.mat-form-field {
+    margin: 3px;
+}
+
+button.half-width {
+    width: 48%;
+    margin: 10px 1%;
+}

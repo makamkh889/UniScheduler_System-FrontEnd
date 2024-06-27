@@ -1,0 +1,91 @@
+<div class="admin-container" *ngIf="pageclicked==0">
+
+    <div class="admin-greeting">
+        <h1>Hello, {{ currentAdmin.name }}</h1>
+    </div>
+    <div class="button-container">
+        <button routerLink="/add-admin" class="admin-button" (click)="navigateTo('Admins')">Admins
+            Dashboard</button>
+        <button routerLink="/manage-doctors" class="admin-button" (click)="navigateTo('Doctor')">Doctors
+            Dashboard</button>
+        <button routerLink="/manage-students" class="admin-button" (click)="navigateTo('Students')">Students
+            Dashboard</button>
+        <button routerLink="/manage-halls" class="admin-button" (click)="navigateTo('Halls')">Halls
+            Dashboard</button>
+        <button routerLink="/schedule-courses" class="admin-button" (click)="navigateTo('Schedule')">Schedule
+            Courses</button>
+    </div>
+
+
+    <div class="top-right">
+        <button mat-icon-button (click)="toggleSideBar()">
+            <mat-icon style="color: rgb(255, 255, 255);">menu</mat-icon>
+        </button>
+    </div>
+
+    <mat-drawer-container>
+        <mat-sidenav #sidenav class="side-nav-left" position="start" role="directory" [opened]="opened">
+            <div class="side-nav-content">
+                <div class="backdrop" (click)="opened = false"></div>
+
+                <form [formGroup]="emailForm" (ngSubmit)="onSubmit()">
+
+                    <mat-form-field class="half-width">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email">
+                    </mat-form-field>
+
+                    <mat-form-field class="half-width">
+                        <mat-label>Subject</mat-label>
+                        <input matInput formControlName="subject">
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width">
+                        <mat-label>Body</mat-label>
+                        <input matInput formControlName="body">
+                    </mat-form-field>
+
+                    <button [disabled]="emailForm.invalid" color="Saveform" class="full-width"
+                        type="submit">Save</button>
+                </form>
+
+
+                <form [formGroup]="HallForm" (ngSubmit)="onSubmitHallForm()">
+
+                    <mat-form-field class="half-width">
+                        <mat-label>Capacity</mat-label>
+                        <input matInput formControlName="Capacity">
+                    </mat-form-field>
+
+                    <mat-form-field class="half-width">
+                        <mat-label>HallName</mat-label>
+                        <input matInput formControlName="HallName">
+                    </mat-form-field>
+
+                    <button [disabled]="HallForm.invalid" color="Saveform" class="full-width"
+                        type="submit">Save</button>
+                </form>
+
+                <form [formGroup]="DepartmentForm" (ngSubmit)="onSubmitDepatmentForm()">
+
+                    <mat-form-field class="half-width">
+                        <mat-label>Name</mat-label>
+                        <input matInput formControlName="Name">
+                    </mat-form-field>
+
+                    <mat-form-field class="half-width">
+                        <mat-label>Level</mat-label>
+                        <input matInput formControlName="Level">
+                    </mat-form-field>
+
+                    <button [disabled]="DepartmentForm.invalid" color="Saveform" class="full-width"
+                        type="submit">Save</button>
+                </form>
+
+            </div>
+
+        </mat-sidenav>
+    </mat-drawer-container>
+
+</div>
+<router-outlet *ngIf="pageclicked!=0"></router-outlet>
