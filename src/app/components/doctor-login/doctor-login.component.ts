@@ -4,12 +4,13 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import { filter } from 'rxjs/operators';
 import { UserAuthenticationService } from '../../services/user-authentication.service';
 import { UserAuth } from '../../models/user-auth';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-doctor-login',
   standalone: true,
   // must import RouterOutlet to make router work
-  imports: [RouterLink, RouterOutlet, FormsModule],
+  imports: [RouterLink, RouterOutlet, FormsModule, ReactiveFormsModule,CommonModule],
   templateUrl: './doctor-login.component.html',
   styleUrl: './doctor-login.component.css',
 })
@@ -18,26 +19,26 @@ export class DoctorLoginComponent implements OnInit {
   password: string = "";
   DoctorID: string = "";
   _UserAuth: UserAuth = {} as UserAuth;
+  DoctorForm: FormGroup = {} as FormGroup;
+  loginError = false;
 
   CheckLogin() {
     this._UserAuth.userName = this.DoctorID;
     this._UserAuth.password = this.password;
     this.authService.login('doctor', this._UserAuth).subscribe({
       next: (response) => {
-        console.log('Login successful');
-
         this.ShowDoctorLogin = false;
         this.router.navigate(['/Home/DoctorLogin/DoctorHome']);
       },
       error: (error) => {
-        console.error('Login failed', error);
+        this.loginError = true;
       }
     });
 
   }
 
   ShowDoctorLogin: boolean = true;
-  constructor(private authService: UserAuthenticationService, private router: Router, private _activatedRoute: ActivatedRoute) {
+  constructor(private authService: UserAuthenticationService, private fb: FormBuilder,private router: Router, private _activatedRoute: ActivatedRoute) {
     // Listen to route changes to correctly set showHome
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -46,9 +47,11 @@ export class DoctorLoginComponent implements OnInit {
       });
   }
   ngOnInit(): void {
-    //throw new Error('Method not implemented.');
+    this.DoctorForm = this.fb.group({
+      DoctorID: ['', Validators.required],
+      password: ['', Validators.required]
+    });
   }
-
 
   private setShowHomeState(): void {
     // Retrieve the path of the current active child route (if any)

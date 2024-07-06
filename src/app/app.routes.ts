@@ -9,12 +9,12 @@ import { AdminHomeComponent } from './components/admin-home/admin-home.component
 import { AdminsDashboardControlComponent } from './components/admins-dashboard-control/admins-dashboard-control.component';
 import { DoctorDashboardControlComponent } from './components/doctor-dashboard-control/doctor-dashboard-control.component';
 import { StudentsDashboardControlComponent } from './components/students-dashboard-control/students-dashboard-control.component';
-import { HallsDashboardControlComponent } from './components/halls-dashboard-control/halls-dashboard-control.component';
 import { ScheduleCoursesComponent } from './components/schedule-courses/schedule-courses.component';
 import { adminAuthGuard } from './guards/admin-auth.guard';
 import { studentAuthGuard } from './guards/student-auth.guard';
 import { doctorAuthGuard } from './guards/doctor-auth.guard';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { CourseDashboardControlComponent } from './components/course-dashboard-control/course-dashboard-control.component';
 //import { provideRouter } from '@angular/router';
 
 export const routes: Routes = [
@@ -45,8 +45,8 @@ export const routes: Routes = [
           // canActivate: [studentAuthGuard],
         },
         {
-          path: 'HallsDashboard',
-          component: HallsDashboardControlComponent,
+          path: 'CoursesDashboard',
+          component: CourseDashboardControlComponent,
           // canActivate: [studentAuthGuard],
         },
         {

@@ -6,9 +6,9 @@
                     <div class="col-sm-8">
                         <h2>Doctor Management</h2>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3 text-right">
                         <button type="button" class="btn btn-info add-new" (click)="AddDoctor()">
-                            <i class="fa fa-plus" style="color: #0ed5f8"></i> Add New Doctor
+                            Add New Doctor
                         </button>
                     </div>
                 </div>
@@ -19,12 +19,12 @@
                 <input matInput (keyup)="applyFilter($event)" placeholder="Search ..." #input>
             </mat-form-field>
 
-            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+            <table #table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
                 <ng-container matColumnDef="Name">
                     <th mat-header-cell *matHeaderCellDef> Name </th>
                     <td mat-cell *matCellDef="let element">
                         @if(element.AddOption){
-                        <input type="text" [(ngModel)]="element.name" placeholder="Enter Name">
+                        <input type="text" #nameInput [(ngModel)]="element.name" placeholder="Enter Name">
 
                         }
                         @else{
@@ -101,7 +101,7 @@
                     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
                         <div class="example-element-detail"
                             [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                            <table class="inner-table">
+                            <table class="inner-table mat-elevation-z8">
                                 <thead>
                                     <tr>
                                         <th>Course Name</th>

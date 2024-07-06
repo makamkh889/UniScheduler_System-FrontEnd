@@ -16,8 +16,18 @@
     width: 100%;
 }
 
+.login-error-box {
+    margin-bottom: 3px;
+    /* padding: 10px;
+    border: 1px solid #ff0000;
+    border-radius: 5px;
+    background-color: #ffe5e5; */
+    color: #ff0000;
+    text-align: center;
+}
+
 .registration-form {
-    background-color: #d3d3d3;
+    background-color: #b7ccd3;
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -27,7 +37,7 @@
 }
 
 .registration-form h2 {
-    color: #4d0166;
+    color: #012f3a;
     margin-bottom: 20px;
 }
 
@@ -39,19 +49,19 @@
 .form-group label {
     display: block;
     margin-bottom: 5px;
-    color: #4d0166;
+    color: #012f3a;
 }
 
 .form-group input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #ffff;
     border-radius: 5px;
     box-sizing: border-box;
 }
 
 .btn {
-    background-color: #4d0166;
+    background-color: #012f3a;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -60,6 +70,6 @@
 }
 
 .btn:hover {
-    background-color: #343446;
+    background-color: #3db2cc;
     transform: translate(5px, -5px);
 }

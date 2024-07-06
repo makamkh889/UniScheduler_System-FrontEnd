@@ -18,6 +18,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { currentGroups } from '../../models/currentGroups';
 import { AlertService } from '../../services/alert.service';
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable'
+
 
 @Component({
   selector: 'app-schedule-courses',
@@ -45,6 +48,7 @@ export class ScheduleCoursesComponent implements OnInit {
   showTableBoll: boolean = false;
   ShowLevel: boolean = false;
   ShowLevelButtons: boolean = false;
+  showloading: boolean = false;
   CurrentLevelGroup: number = 0;
   newHall: Hall = {} as Hall;
   abbreviationMapping: { [key: string]: string } = {
@@ -57,6 +61,69 @@ export class ScheduleCoursesComponent implements OnInit {
 
   TimeData: string[] = ['08:00', '10:00', '12:00', '02:00', '04:00', '06:00'];
   DayData: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'];
+
+
+  downloadPDF() {
+    const doc = new jsPDF();
+    interface Entry {
+      doctorName: string;
+      courseName: string;
+      hall: string;
+    }
+    const head = [['Time', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday']];
+    const times = ['08:00', '10:00', '12:00', '02:00', '04:00', '06:00'];
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'];
+
+    const body = times.map(time => [
+      time,
+      ...days.map(day => {
+        const entry: Entry = this.myData[day][time] || {}; // Initialize entry object
+
+        // Example: Accessing properties, adjust as per your data structure
+        let doctorName = entry.doctorName + "\n" || '';
+        let courseName = entry.courseName + "\n" || '';
+        let hall = entry.hall || '';
+        if (doctorName[0] == '-') {
+          doctorName = "\n";
+          courseName = "\n";
+          hall = " ";
+
+        }
+        let cellContent = "";
+        if (doctorName[0] == '\n') {
+          cellContent = `${doctorName} ${courseName} ${hall}`;
+        }
+        else
+          cellContent = `Dr.${doctorName} ${courseName} ${hall}`;
+
+        return cellContent;
+      })
+    ]);
+
+
+
+    autoTable(doc, {
+      head: head,
+      body: body,
+      didDrawCell: (data) => {
+        let raw = data.cell.raw;
+
+        if (typeof raw === 'string' && raw.includes('\n')) {
+          raw = "\n\n\n";
+          const textPos = doc.getTextDimensions(raw);
+          doc.setFontSize(10);
+          doc.text(raw, data.cell.x + data.cell.padding('left'), data.cell.y + textPos.h / 2 + data.cell.padding('top'));
+        }
+      }
+    });
+
+    doc.save(`schedule ${this.CurrentLevelGroup} ${this.SelectedDepartment}.pdf`);
+  }
+
+
+
+
+
 
   displayedColumnsCourses: string[] = [
     'courseName',
@@ -76,25 +143,7 @@ export class ScheduleCoursesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._ApiAdminService.GetSchedule().subscribe({
-      next: (schedule: Schedule[]) => {
-
-        this.courseSchedules = schedule.map(course => ({
-          courseCode: course.courseCode,
-          courseName: course.courseName,
-          department: course.department,
-          hall: course.hall,
-          time: course.time,
-          level: course.level,
-          day: this.abbreviationMapping[course.day],
-          doctorName: course.doctorName
-        }))
-        console.log(this.courseSchedules)
-      },
-      error: (error) => {
-        console.error('Error fetching Schedule:', error);
-      }
-    });
+    this.get();
 
 
     this._ApiAdminService.GetGroupBerLevel().subscribe({
@@ -129,8 +178,9 @@ export class ScheduleCoursesComponent implements OnInit {
     this.newHall.hallName = '';
   }
   ShowLevelButton() {
-    this.ShowLevelButtons = true;
-    this.ShowLevel
+    this.showloading = true;
+    this.ShowLevel = true;
+    //this.ShowLevel
     this.RunSechdule();
   }
   ChangeMode(hall: any) {
@@ -163,13 +213,38 @@ export class ScheduleCoursesComponent implements OnInit {
 
   RunSechdule() {
     this._ApiAdminService.Schedule().subscribe({
-      next: (response) => {
+      next: (response: InValidCourses[]) => {
         this.invalidCoursesData = response;
-
-        this._AlertService.showSuccessAlert("All Courses Schedule succesfully.");
+        this.showloading = false;
+        this.ShowLevelButtons = true;
+        this.get();
+        this.dataSource.data = this.invalidCoursesData;
       },
       error: (error) => {
         console.error('Error fetching admins:', error);
+      }
+    });
+
+  }
+
+  get() {
+    this._ApiAdminService.GetSchedule().subscribe({
+      next: (schedule: Schedule[]) => {
+
+        this.courseSchedules = schedule.map(course => ({
+          courseCode: course.courseCode,
+          courseName: course.courseName,
+          department: course.department,
+          hall: course.hall,
+          time: course.time,
+          level: course.level,
+          day: this.abbreviationMapping[course.day],
+          doctorName: course.doctorName
+        }))
+        console.log(this.courseSchedules)
+      },
+      error: (error) => {
+        console.error('Error fetching Schedule:', error.message);
       }
     });
   }
@@ -205,7 +280,7 @@ export class ScheduleCoursesComponent implements OnInit {
     this.showTableBoll = true;
     this.SelectedDepartment = department;
     this.filterData(department, schedulelevel);
-    console.log(department,schedulelevel);
+    console.log(department, schedulelevel);
   }
   filterData(scheduleDepartment: string, schedulelevel: number) {
     // Initialize myData with placeholder values

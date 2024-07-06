@@ -1,3 +1,15 @@
+.container-lg {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: 100%;
+    overflow: hidden;
+    margin-top: 30px;
+}
+
+.inner-table{
+    border-radius: 30px;
+}
 table {
     width: 80%;
 }
@@ -16,8 +28,9 @@ tr.example-detail-row {
     height: 0;
 }
 
+
 tr.example-element-row:not(.example-expanded-row):hover {
-    background: rgb(128, 111, 134);
+    background: #a6c6ce;
 }
 
 tr.example-element-row:not(.example-expanded-row):active {

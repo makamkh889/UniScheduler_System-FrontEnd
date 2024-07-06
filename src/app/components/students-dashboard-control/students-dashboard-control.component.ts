@@ -39,39 +39,44 @@ export class StudentsDashboardControlComponent implements OnInit {
   fileName = '';
   studentForm: FormGroup = {} as FormGroup;
   STUDENT_DATA: StudentData[] = [];
+  status: "initial" | "uploading" | "success" | "fail" = "initial"; // Variable to store file status
+  file: File | null = null; // Variable to store file
 
 
-  displayedColumns: string[] = ['name', 'AcademicNumber', 'nationalId', 'email', 'department', 'gpa', 'Actions'];
+  displayedColumns: string[] = ['name', 'academicNumber', 'nationalId', 'email', 'department', 'gpa', 'Actions'];
   dataSource = new MatTableDataSource(this.STUDENT_DATA);
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   expandedElement: StudentData | null = null;
   showAddStudentForm = false;
   newStudent: Student = { nationalId: '', name: '', email: '', academicNumber: '', department: '', level: 0, semester: 0 };
-  FilterBySemester: string = '';
+  FilterBySemester: number = 0;
   FilterByDepartment: string = '';
   AppearTable: boolean = false;
 
 
   onFileSelected(event: any) {
+    this.status = 'initial';
     const file: File = event.target.files[0];
     if (file) {
       // Check if the file type is Excel
       if (
         file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       ) {
-        
-        
+
         this.fileName = file.name;
         const formData = new FormData();
 
         formData.append('file', file, file.name);
-        
-        this._ApiAdminService.uploadExcelsheetForStudent(formData).subscribe({
+
+        const upload$ = this._ApiAdminService.uploadExcelsheetForStudent(formData);
+        this.status = 'uploading';
+        upload$.subscribe({
           next: (response) => {
-            this._AlertService.showSuccessAlert(response.message);
+            this.status = 'success';
           },
           error: (err) => {
-            this._AlertService.showErrorAlert(err.message || "Error uploading file:");
+            console.log(err.message);
+            this.status = 'fail';
           }
         });
       } else {
@@ -120,12 +125,12 @@ export class StudentsDashboardControlComponent implements OnInit {
           }
         });
       }
-    } 
+    }
   }
 
 
   filterBySemesterAndDepartment() {
-    this._ApiAdminService.GetStudents(this.FilterBySemester, this.FilterByDepartment).subscribe({
+    this._ApiAdminService.GetStudents(this.FilterBySemester*2, this.FilterByDepartment).subscribe({
       next: (student: StudentData[]) => {
         this.STUDENT_DATA = student;
         console.log(student)
@@ -140,10 +145,11 @@ export class StudentsDashboardControlComponent implements OnInit {
   }
 
 
-  deleteStudent(student: StudentData) {
-    this._ApiAdminService.DeleteDoctor(student.AcademicNumber).subscribe({
+  deleteStudent(student: string) {
+
+    this._ApiAdminService.DeleteStudent(student).subscribe({
       next: (response) => {
-        this.STUDENT_DATA = this.STUDENT_DATA.filter(a => a.AcademicNumber !== student.AcademicNumber)
+        this.STUDENT_DATA = this.STUDENT_DATA.filter(a => a.AcademicNumber !== student)
         // Update the data source
         this.dataSource.data = this.STUDENT_DATA;
         this._AlertService.showSuccessAlert(response.message);

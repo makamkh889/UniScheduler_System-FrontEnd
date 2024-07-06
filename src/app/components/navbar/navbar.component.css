@@ -2,8 +2,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #100029;
-    padding: 10px 10px;
+    background-color: #163c45;
+    padding:10px 5px 10px 5px;
+}
+
+.col-sm-2 {
+    padding-left: 73px;
 }
 
 .header-left {
@@ -12,30 +16,53 @@
 }
 
 .header-image {
-    width: 100px;
-    height: 65px;
+    width: 200px;
+    height: 70px;
+    padding-left: 10px;
 }
 
 .header-title {
     font-size: 20px;
     font-weight: 100;
     color: #ffffff;
-    /* Changed to white for better visibility against dark background */
 }
 
-.header-center {
-    flex-grow: 1;
-    /* This will push the nav-tabs to the center */
+.header-admin {
     display: flex;
-    justify-content: right;
-    padding-right: 50px;
+    align-items: center;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+}
+
+.admin-button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #ffffff;
+    /* padding: 5px 10px; */
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.admin-button:hover {
+    color: #01a7cc;
+    transform: translateY(-5px);
+}
+
+
+.admin-button:focus {
+    outline: none;
 }
 
 .social-link {
     color: #ffffff;
     font-size: 24px;
-    margin: 15px;
-
+    margin: 0 15px;
+    transition: color 0.3s ease;
 }
 
 .social-link:hover {

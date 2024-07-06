@@ -17,7 +17,7 @@
                     </div>
                 </div>
             </div>
-
+            <div *ngIf="showloading" class="loader"></div>
             <ng-container *ngIf="!ShowLevelButtons">
                 <div class="row mt-3">
                     <ng-container *ngIf="!ShowLevel">
@@ -39,7 +39,7 @@
                         </div>
                     </ng-container>
                 </div>
-                <div class="col-mt-6 d-flex justify-content-end">
+                <div class="col-mt-8 d-flex justify-content-end">
                     <ng-container *ngIf="ShowLevel">
                         <ng-container *ngFor="let group of currentGroup">
                             <ng-container *ngIf="group.Level === CurrentLevelGroup">
@@ -53,181 +53,186 @@
                             <i class="fa-solid fa-xmark" style="color: #e01b24;"></i>
                         </button>
                     </ng-container>
-
                 </div>
-
-                <ng-container *ngIf="showTableBoll">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>Time</th>
-                                <th>Sunday</th>
-                                <th>Monday</th>
-                                <th>Tuesday</th>
-                                <th>Wednesday</th>
-                                <th>Thursday</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let time of TimeData">
-                                <td>{{ time }}</td>
-                                <td>
-                                    <button type="button" class="btn btn-link"
-                                        (click)="toggleCourseDetails('Sunday', time)">
-                                        {{ myData['Sunday'][time].courseName }}
-                                    </button>
-                                    <div id="Sunday-{{ time }}-details" class="collapse">
-                                        <p>Dr: {{ myData['Sunday'][time].doctorName }}</p>
-                                        @if(!myData['Sunday'][time].editMode)
-                                        {
-                                        <p>Hall: {{ myData['Sunday'][time].hall }}</p>
-                                        }
-                                        @else{
-                                        <input [(ngModel)]="myData['Sunday'][time].EditNewHall" placeholder="Hall"
-                                            class="form-control" />
-                                        }
-                                        <p>Code: {{ myData['Sunday'][time].courseCode }}</p>
-                                        <button *ngIf="!myData['Sunday'][time].editMode" class="btn btn-cancel"
-                                            (click)="ChangeMode(  myData['Sunday'][time] )">
-                                            <i class="fa-regular fa-pen-to-square" style="color: #2e062d;"></i>
-                                        </button>
-                                        <button *ngIf="myData['Sunday'][time].editMode" class="btn btn-cancel"
-                                            (click)="SaveHall( myData['Sunday'][time])">
-                                            <i class="fa-solid fa-square-check" style="color: #26a269;"></i>
-                                        </button>
-                                        <button *ngIf="myData['Sunday'][time].editMode" class="btn btn-cancel"
-                                            (click)="canselEdit( myData['Sunday'][time])">
-                                            <i class="fa-solid fa-xmark" style="color: #e01b24;"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-link"
-                                        (click)="toggleCourseDetails('Monday', time)">
-                                        {{ myData['Monday'][time].courseName }}
-                                    </button>
-                                    <div id="Monday-{{ time }}-details" class="collapse">
-                                        <p>Dr: {{ myData['Monday'][time].doctorName }}</p>
-                                        @if(!myData['Monday'][time].editMode)
-                                        {
-                                        <p>Hall: {{ myData['Monday'][time].hall }}</p>
-                                        }
-                                        @else{
-                                        <input [(ngModel)]="myData['Monday'][time].EditNewHall" placeholder="Hall"
-                                            class="form-control" />
-                                        }
-                                        <p>Code: {{ myData['Monday'][time].courseCode }}</p>
-                                        <button *ngIf="!myData['Monday'][time].editMode" class="btn btn-cancel"
-                                            (click)="ChangeMode(myData['Monday'][time])">
-                                            <i class="fa-regular fa-pen-to-square" style="color: #2e062d;"></i>
-                                        </button>
-                                        <button *ngIf=" myData['Monday'][time].editMode" class="btn btn-cancel"
-                                            (click)="SaveHall(myData['Monday'][time])">
-                                            <i class="fa-solid fa-square-check" style="color: #26a269;"></i>
-                                        </button>
-                                        <button *ngIf=" myData['Monday'][time].editMode" class="btn btn-cancel"
-                                            (click)="canselEdit(myData['Monday'][time])">
-                                            <i class="fa-solid fa-xmark" style="color: #e01b24;"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-link"
-                                        (click)="toggleCourseDetails('Tuesday', time)">
-                                        {{ myData['Tuesday'][time].courseName }}
-                                    </button>
-                                    <div id="Tuesday-{{ time }}-details" class="collapse">
-                                        <p>Dr: {{ myData['Tuesday'][time].doctorName }}</p>
-                                        @if(!myData['Tuesday'][time].editMode)
-                                        {
-                                        <p>Hall: {{ myData['Tuesday'][time].hall }}</p>
-                                        }
-                                        @else{
-                                        <input [(ngModel)]=" myData['Tuesday'][time].EditNewHall" placeholder="Hall"
-                                            class="form-control" />
-                                        }
-                                        <p>Code: {{ myData['Tuesday'][time].courseCode }}</p>
-                                        <button *ngIf="!myData['Tuesday'][time].editMode" class="btn btn-cancel"
-                                            (click)="ChangeMode( myData['Tuesday'][time] )">
-                                            <i class="fa-regular fa-pen-to-square" style="color: #2e062d;"></i>
-                                        </button>
-                                        <button *ngIf="myData['Tuesday'][time].editMode" class="btn btn-cancel"
-                                            (click)="SaveHall( myData['Tuesday'][time] )">
-                                            <i class="fa-solid fa-square-check" style="color: #26a269;"></i>
-                                        </button>
-                                        <button *ngIf="myData['Tuesday'][time].editMode" class="btn btn-cancel"
-                                            (click)="canselEdit( myData['Tuesday'][time] )">
-                                            <i class="fa-solid fa-xmark" style="color: #e01b24;"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-link"
-                                        (click)="toggleCourseDetails('Wednesday', time)">
-                                        {{ myData['Wednesday'][time].courseName }}
-                                    </button>
-                                    <div id="Wednesday-{{ time }}-details" class="collapse">
-                                        <p>Dr: {{ myData['Wednesday'][time].doctorName }}</p>
-                                        @if(!myData['Wednesday'][time].editMode)
-                                        {
-                                        <p>Hall: {{ myData['Wednesday'][time].hall}}</p>
-                                        }
-                                        @else{
-                                        <input [(ngModel)]=" myData['Wednesday'][time].EditNewHall" placeholder="Hall"
-                                            class="form-control" />
-                                        }
-                                        <p>Code: {{ myData['Wednesday'][time].courseCode }}</p>
-
-                                        <button *ngIf="!myData['Wednesday'][time].editMode" class="btn btn-cancel"
-                                            (click)="ChangeMode( myData['Wednesday'][time] )">
-                                            <i class="fa-regular fa-pen-to-square" style="color: #2e062d;"></i>
-                                        </button>
-                                        <button *ngIf="myData['Wednesday'][time].editMode" class="btn btn-cancel"
-                                            (click)="SaveHall(myData['Wednesday'][time])">
-                                            <i class="fa-solid fa-square-check" style="color: #26a269;"></i>
-                                        </button>
-                                        <button *ngIf="myData['Wednesday'][time].editMode" class="btn btn-cancel"
-                                            (click)="canselEdit(myData['Wednesday'][time])">
-                                            <i class="fa-solid fa-xmark" style="color: #e01b24;"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-link"
-                                        (click)="toggleCourseDetails('Thursday', time)">
-                                        {{ myData['Thursday'][time].courseName }}
-                                    </button>
-                                    <div id="Thursday-{{ time }}-details" class="collapse">
-                                        <p>Dr: {{ myData['Thursday'][time].doctorName }}</p>
-                                        @if(!myData['Thursday'][time].editMode)
-                                        {
-                                        <p>Hall: {{myData['Thursday'][time].hall}}</p>
-                                        }
-                                        @else{
-                                        <input [(ngModel)]="myData['Thursday'][time].EditNewHall" placeholder="Hall"
-                                            class="form-control" />
-                                        }
-                                        <p>Code: {{ myData['Thursday'][time].courseCode }}</p>
-
-                                        <button *ngIf="!myData['Thursday'][time].editMode" class="btn btn-cancel"
-                                            (click)="ChangeMode( myData['Thursday'][time] )">
-                                            <i class="fa-regular fa-pen-to-square" style="color: #2e062d;"></i>
-                                        </button>
-                                        <button *ngIf="myData['Thursday'][time].editMode" class="btn btn-cancel"
-                                            (click)="SaveHall(myData['Thursday'][time])">
-                                            <i class="fa-solid fa-square-check" style="color: #26a269;"></i>
-                                        </button>
-                                        <button *ngIf="myData['Thursday'][time].editMode" class="btn btn-cancel"
-                                            (click)="canselEdit(myData['Thursday'][time])">
-                                            <i class="fa-solid fa-xmark" style="color: #e01b24;"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </ng-container>
+                <div *ngIf="showTableBoll">
+                    <button mat-button (click)="downloadPDF()">
+                        <img src="assets/download.png" class="icon" alt="Icon"
+                            style="border:none;background: none; width: 20px; height: 20px;">
+                    </button>
+                </div>
             </ng-container>
+            <ng-container *ngIf="showTableBoll">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Sunday</th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let time of TimeData">
+                            <td>{{ time }}</td>
+                            <td>
+                                <button type="button" class="btn btn-link"
+                                    (click)="toggleCourseDetails('Sunday', time)">
+                                    {{ myData['Sunday'][time].courseName }}
+                                </button>
+                                <div id="Sunday-{{ time }}-details" class="collapse">
+                                    <p>Dr: {{ myData['Sunday'][time].doctorName }}</p>
+                                    @if(!myData['Sunday'][time].editMode)
+                                    {
+                                    <p>Hall: {{ myData['Sunday'][time].hall }}</p>
+                                    }
+                                    @else{
+                                    <input [(ngModel)]="myData['Sunday'][time].EditNewHall" placeholder="Hall"
+                                        class="form-control" />
+                                    }
+                                    <p>Code: {{ myData['Sunday'][time].courseCode }}</p>
+                                    <button *ngIf="!myData['Sunday'][time].editMode" class="btn btn-cancel"
+                                        (click)="ChangeMode(  myData['Sunday'][time] )">
+                                        <i class="fa-regular fa-pen-to-square" style="color: #2e062d;"></i>
+                                    </button>
+                                    <button *ngIf="myData['Sunday'][time].editMode" class="btn btn-cancel"
+                                        (click)="SaveHall( myData['Sunday'][time])">
+                                        <i class="fa-solid fa-square-check" style="color: #26a269;"></i>
+                                    </button>
+                                    <button *ngIf="myData['Sunday'][time].editMode" class="btn btn-cancel"
+                                        (click)="canselEdit( myData['Sunday'][time])">
+                                        <i class="fa-solid fa-xmark" style="color: #e01b24;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-link"
+                                    (click)="toggleCourseDetails('Monday', time)">
+                                    {{ myData['Monday'][time].courseName }}
+                                </button>
+                                <div id="Monday-{{ time }}-details" class="collapse">
+                                    <p>Dr: {{ myData['Monday'][time].doctorName }}</p>
+                                    @if(!myData['Monday'][time].editMode)
+                                    {
+                                    <p>Hall: {{ myData['Monday'][time].hall }}</p>
+                                    }
+                                    @else{
+                                    <input [(ngModel)]="myData['Monday'][time].EditNewHall" placeholder="Hall"
+                                        class="form-control" />
+                                    }
+                                    <p>Code: {{ myData['Monday'][time].courseCode }}</p>
+                                    <button *ngIf="!myData['Monday'][time].editMode" class="btn btn-cancel"
+                                        (click)="ChangeMode(myData['Monday'][time])">
+                                        <i class="fa-regular fa-pen-to-square" style="color: #2e062d;"></i>
+                                    </button>
+                                    <button *ngIf=" myData['Monday'][time].editMode" class="btn btn-cancel"
+                                        (click)="SaveHall(myData['Monday'][time])">
+                                        <i class="fa-solid fa-square-check" style="color: #26a269;"></i>
+                                    </button>
+                                    <button *ngIf=" myData['Monday'][time].editMode" class="btn btn-cancel"
+                                        (click)="canselEdit(myData['Monday'][time])">
+                                        <i class="fa-solid fa-xmark" style="color: #e01b24;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-link"
+                                    (click)="toggleCourseDetails('Tuesday', time)">
+                                    {{ myData['Tuesday'][time].courseName }}
+                                </button>
+                                <div id="Tuesday-{{ time }}-details" class="collapse">
+                                    <p>Dr: {{ myData['Tuesday'][time].doctorName }}</p>
+                                    @if(!myData['Tuesday'][time].editMode)
+                                    {
+                                    <p>Hall: {{ myData['Tuesday'][time].hall }}</p>
+                                    }
+                                    @else{
+                                    <input [(ngModel)]=" myData['Tuesday'][time].EditNewHall" placeholder="Hall"
+                                        class="form-control" />
+                                    }
+                                    <p>Code: {{ myData['Tuesday'][time].courseCode }}</p>
+                                    <button *ngIf="!myData['Tuesday'][time].editMode" class="btn btn-cancel"
+                                        (click)="ChangeMode( myData['Tuesday'][time] )">
+                                        <i class="fa-regular fa-pen-to-square" style="color: #2e062d;"></i>
+                                    </button>
+                                    <button *ngIf="myData['Tuesday'][time].editMode" class="btn btn-cancel"
+                                        (click)="SaveHall( myData['Tuesday'][time] )">
+                                        <i class="fa-solid fa-square-check" style="color: #26a269;"></i>
+                                    </button>
+                                    <button *ngIf="myData['Tuesday'][time].editMode" class="btn btn-cancel"
+                                        (click)="canselEdit( myData['Tuesday'][time] )">
+                                        <i class="fa-solid fa-xmark" style="color: #e01b24;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-link"
+                                    (click)="toggleCourseDetails('Wednesday', time)">
+                                    {{ myData['Wednesday'][time].courseName }}
+                                </button>
+                                <div id="Wednesday-{{ time }}-details" class="collapse">
+                                    <p>Dr: {{ myData['Wednesday'][time].doctorName }}</p>
+                                    @if(!myData['Wednesday'][time].editMode)
+                                    {
+                                    <p>Hall: {{ myData['Wednesday'][time].hall}}</p>
+                                    }
+                                    @else{
+                                    <input [(ngModel)]=" myData['Wednesday'][time].EditNewHall" placeholder="Hall"
+                                        class="form-control" />
+                                    }
+                                    <p>Code: {{ myData['Wednesday'][time].courseCode }}</p>
+
+                                    <button *ngIf="!myData['Wednesday'][time].editMode" class="btn btn-cancel"
+                                        (click)="ChangeMode( myData['Wednesday'][time] )">
+                                        <i class="fa-regular fa-pen-to-square" style="color: #2e062d;"></i>
+                                    </button>
+                                    <button *ngIf="myData['Wednesday'][time].editMode" class="btn btn-cancel"
+                                        (click)="SaveHall(myData['Wednesday'][time])">
+                                        <i class="fa-solid fa-square-check" style="color: #26a269;"></i>
+                                    </button>
+                                    <button *ngIf="myData['Wednesday'][time].editMode" class="btn btn-cancel"
+                                        (click)="canselEdit(myData['Wednesday'][time])">
+                                        <i class="fa-solid fa-xmark" style="color: #e01b24;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-link"
+                                    (click)="toggleCourseDetails('Thursday', time)">
+                                    {{ myData['Thursday'][time].courseName }}
+                                </button>
+                                <div id="Thursday-{{ time }}-details" class="collapse">
+                                    <p>Dr: {{ myData['Thursday'][time].doctorName }}</p>
+                                    @if(!myData['Thursday'][time].editMode)
+                                    {
+                                    <p>Hall: {{myData['Thursday'][time].hall}}</p>
+                                    }
+                                    @else{
+                                    <input [(ngModel)]="myData['Thursday'][time].EditNewHall" placeholder="Hall"
+                                        class="form-control" />
+                                    }
+                                    <p>Code: {{ myData['Thursday'][time].courseCode }}</p>
+
+                                    <button *ngIf="!myData['Thursday'][time].editMode" class="btn btn-cancel"
+                                        (click)="ChangeMode( myData['Thursday'][time] )">
+                                        <i class="fa-regular fa-pen-to-square" style="color: #2e062d;"></i>
+                                    </button>
+                                    <button *ngIf="myData['Thursday'][time].editMode" class="btn btn-cancel"
+                                        (click)="SaveHall(myData['Thursday'][time])">
+                                        <i class="fa-solid fa-square-check" style="color: #26a269;"></i>
+                                    </button>
+                                    <button *ngIf="myData['Thursday'][time].editMode" class="btn btn-cancel"
+                                        (click)="canselEdit(myData['Thursday'][time])">
+                                        <i class="fa-solid fa-xmark" style="color: #e01b24;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-container>
+
             <!-- InValidCourses -------------------------------------->
             <ng-container *ngIf="ShowLevelButtons">
                 <mat-form-field class="FilterC">
@@ -284,6 +289,9 @@
                         <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
                     </tr>
                 </table>
+
+                <div>
+                </div>
             </ng-container>
         </div>
     </div>

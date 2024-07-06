@@ -1,6 +1,9 @@
 .container-lg {
-    padding: 20px;
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: 100%;
+    overflow: hidden;
 }
 
 .table-responsive {

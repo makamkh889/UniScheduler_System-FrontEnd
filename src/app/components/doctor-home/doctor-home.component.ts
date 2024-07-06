@@ -13,6 +13,8 @@ import { ApiDoctorService } from '../../services/api-doctor.service';
 import { doctorHomeOptions } from '../../models/doctorHomeOptions';
 import { EnrollDocotrCoruses } from '../../models/EnrollDocotrCoruses';
 import { currentDoctorData } from '../../models/currentDoctorData';
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable'
 
 
 @Component({
@@ -70,7 +72,7 @@ export class DoctorHomeComponent implements OnInit {
   courseSchedules: doctorSchedule[] = [];
 
 
-  displayedColumns: string[] = ['courseName', 'courseCode', 'option1', 'option2', 'option3', 'gruop', 'actions'];
+  displayedColumns: string[] = ['courseName', 'courseCode', 'option1', 'option2', 'option3', 'gruop', 'EnrolledStudentsCount', 'actions'];
   displayedColumnsSchedule: string[] = ['time', 'Sunday', 'Monday', "Tuesday", 'Wednesday', 'Thursday'];
 
   constructor(private _AlertService: AlertService, private _ApiDoctorService: ApiDoctorService) {
@@ -78,11 +80,73 @@ export class DoctorHomeComponent implements OnInit {
   }
 
 
+
+
+
+  downloadPDF() {
+    const doc = new jsPDF();
+    interface Entry {
+      name: string;
+      department: string;
+      hall: string;
+    }
+
+
+    const head = [['Time', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday']];
+    const times = ['08:00', '10:00', '12:00', '02:00', '04:00', '06:00'];
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'];
+
+    const body = times.map(time => [
+      time,
+      ...days.map(day => {
+        const entry: Entry = this.myData[day][time] || {}; // Initialize entry object
+
+        // Example: Accessing properties, adjust as per your data structure
+        let name = entry.name + "\n" || '';
+        let department = entry.department + "\n" || '';
+        let hall = entry.hall || '';
+        if (name[0] == '-') {
+          name = "\n";
+          department = "\n";
+          hall = " ";
+        }
+        let cellContent = "";
+        if (name[0] == '\n') {
+          cellContent = `${name} ${department} ${hall}`;
+        }
+        else
+          cellContent = `Dr.${name} ${department} ${hall}`;
+        return cellContent;
+      })
+    ]);
+
+
+
+    autoTable(doc, {
+      head: head,
+      body: body,
+      didDrawCell: (data) => {
+        let raw = data.cell.raw;
+
+        if (typeof raw === 'string' && raw.includes('\n')) {
+          raw = "\n\n\n";
+          const textPos = doc.getTextDimensions(raw);
+          doc.setFontSize(10);
+          doc.text(raw, data.cell.x + data.cell.padding('left'), data.cell.y + textPos.h / 2 + data.cell.padding('top'));
+        }
+      }
+    });
+
+    doc.save(`schedule ${this.currentDoctor.name} ${this.currentDoctor.department}.pdf`);
+  }
+
+
+
+
   Register() {
     this._ApiDoctorService.GetDoctorCourses().subscribe({
       next: (doctors: doctorHomeOptions[]) => {
         this.ShowOptionTable = true;
-        console.log(doctors);
         this.COURSE_DATA = doctors.map(doctor => ({
           courseName: doctor.courseName,
           courseCode: doctor.courseCode,
@@ -92,7 +156,9 @@ export class DoctorHomeComponent implements OnInit {
           option3: this.getDisplayValue(doctor.option3),
           AddCourseOption: false,
           EditCourseOption: false,
+          EnrolledStudentsCount: 0,
         }))
+        
         this.dataSource.data = this.COURSE_DATA;
       },
       error: (error) => {
@@ -105,7 +171,6 @@ export class DoctorHomeComponent implements OnInit {
 
   CancelTable() {
     this.ShowOptionTable = false;
-    this.ShowScheduleTable = false;
   }
 
   Schedule() {
@@ -122,7 +187,6 @@ export class DoctorHomeComponent implements OnInit {
         }))
         this.filterData();
         this.ShowScheduleTable = true;
-        console.log(this.myData);
       },
       error: (error) => {
         console.error('Error fetching doctors:', error);
@@ -145,7 +209,8 @@ export class DoctorHomeComponent implements OnInit {
       gruop: '',
       courseCode: '',
       AddCourseOption: true,
-      EditCourseOption: false
+      EditCourseOption: false,
+      EnrolledStudentsCount: 0
 
     });
 
@@ -153,7 +218,6 @@ export class DoctorHomeComponent implements OnInit {
   }
   editDoctorCourse(option: doctorHomeOptionsView) {
 
-    console.log(this.AddnewCourse)
     option.AddCourseOption = false
     option.EditCourseOption = true
     this.option1 = option.option1;
@@ -184,8 +248,14 @@ export class DoctorHomeComponent implements OnInit {
             this._AlertService.showSuccessAlert("Done");
           },
           error: (error) => {
-            this._AlertService.showErrorAlert(error);
-            console.error('Error fetching Enroll:', error.message);
+            course.EditCourseOption = false;
+            course.AddCourseOption = false;
+            this.dataSource.data = this.COURSE_DATA;
+            this.AddnewCourse = {} as EnrollDocotrCoruses;
+            course.AddCourseOption = false
+            this._AlertService.showSuccessAlert("Done");
+          //   this._AlertService.showErrorAlert(error.message);
+          //   console.error('Error fetching Enroll:', error.message);
           }
         });
       }
@@ -215,7 +285,7 @@ export class DoctorHomeComponent implements OnInit {
             this.option1 = "";
             this.option2 = "";
             this.option3 = "";
-            console.error('Error fetching Enroll:', error);
+            console.error('Error fetching Enroll:', error.message);
           }
         });
 
@@ -290,8 +360,6 @@ export class DoctorHomeComponent implements OnInit {
         this.myData[day][time] = { name: '-', hall: '-', department: '-', isDuplicate: false };
       });
     });
-    console.log(this.myData);
-
     // Update myData with actual course schedule data filtered by department
     this.courseSchedules.forEach(doctorSchedule => {
       const { name, day, time, hall, department } = doctorSchedule;
@@ -305,12 +373,9 @@ export class DoctorHomeComponent implements OnInit {
           this.myData[day][time].isDuplicate = true;
           this.myData[day][time].name += `, ${name}`;
         }
-        console.log(this.myData[day][time]);
       }
     });
 
-    console.log('Course schedules:', this.courseSchedules); // Check if courseSchedules has data
-    console.log('MyData after filtering:', this.myData); // Check updated state of myData
   }
 
 

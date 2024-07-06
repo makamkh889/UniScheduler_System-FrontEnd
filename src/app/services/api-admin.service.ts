@@ -16,6 +16,9 @@ import { Schedule } from '../models/Schedule';
 import { InValidCourses } from '../models/InValidCourses';
 import { UserAuthenticationService } from './user-authentication.service';
 import { currentAdminData } from '../models/currentAdminData';
+import { environment } from '../../environments/environment.development';
+import { CourseInfo } from '../models/CourseInfo';
+import { CourseInDepartment } from '../models/CourseInDepartment';
 
 
 @Injectable({
@@ -30,75 +33,133 @@ export class ApiAdminService {
    * component that need this service it will happen subscribe on him
    */
 
-  baseUrl: string = 'http://localhost:5088';
+  //baseUrl: string = 'http://unischedulermaker.runasp.net';
 
 
   currentAdminData(): Observable<currentAdminData> {
-    return this.httpclient.get<currentAdminData>(`${this.baseUrl}/currentAdminData`);
+    return this.httpclient.get<currentAdminData>(`${environment.baseUrl}/currentAdminData`);
   }
 
   GetAllAdmins(): Observable<Admin[]> {
-    return this.httpclient.get<Admin[]>(`${this.baseUrl}/GetAdmins`);
+    return this.httpclient.get<Admin[]>(`${environment.baseUrl}/GetAdmins`);
   }
   // take admin type and return Observable from type Admin
   AddNewAdmin(admin: User): Observable<any> {
-    return this.httpclient.post<any>(`${this.baseUrl}/AddAdmin`, admin)
+    return this.httpclient.post<any>(`${environment.baseUrl}/AddAdmin`, admin)
       .pipe(
         tap(response => {
 
           console.log(response.message)
         }),
         catchError((error) => {
-          return throwError(() => error.error); // Rethrow the error so it can be handled by the caller
+          return throwError(() => error); // Rethrow the error so it can be handled by the caller
         })
       );
   }
 
   // take admin type and return Observable from type Admin
   DeleteAdmin(nationalId: string): Observable<any> {
-    return this.httpclient.delete<any>(`${this.baseUrl}/DeleteAdmin`, { body: { nationalId: nationalId } }).pipe(
+    return this.httpclient.delete<any>(`${environment.baseUrl}/DeleteAdmin`, { body: { nationalId: nationalId } }).pipe(
       tap(response => {
       }),
       catchError((error) => {
         console.log(error);
-        return throwError(() => error.error); // Rethrow the error so it can be handled by the caller
+        return throwError(() => error); // Rethrow the error so it can be handled by the caller
       })
     );
   }
 
   EditAdmin(admin: User): Observable<any> {
-    return this.httpclient.put<any>(`${this.baseUrl}/EditAdmin`, admin)
+    return this.httpclient.put<any>(`${environment.baseUrl}/EditAdmin`, admin)
       .pipe(
         tap(response => {
         }),
         catchError((error) => {
-          console.log(error);
-          return throwError(() => error.error);  // Rethrow the error so it can be handled by the caller
+          return throwError(() => error);  // Rethrow the error so it can be handled by the caller
         })
       );
   }
-  ////////////////////////////////////Admin Mange Doctor///////////////////
 
+  CourseInfo(): Observable<CourseInfo[]> {
+    return this.httpclient.get<CourseInfo[]>(`${environment.baseUrl}/CourseInfo`).pipe(
+      tap(response => {
+      }),
+      catchError((error) => {
+        return throwError(() => error);  // Rethrow the error so it can be handled by the caller
+      })
+    );
+  }
 
-  GetAllDocotrs(): Observable<Doctor[]> {
-    return this.httpclient.get<Doctor[]>(`${this.baseUrl}/GetAllDocotrs`).pipe(
+  DeleteDepartmentCourse(CourseCode: string, DepartmentName : string): Observable<any> {
+    return this.httpclient.delete<any>(`${environment.baseUrl}/DeleteDepartmentCourse?CourseCode=${CourseCode}&DepartmentName=${DepartmentName}`).pipe(
+      tap(response => {
+      }),
+      catchError((error) => {
+        return throwError(() => error); // Rethrow the error so it can be handled by the caller
+      })
+    );
+  }
+
+  DeleteCourse(CourseCode: string): Observable<any> {
+    return this.httpclient.delete<any>(`${environment.baseUrl}/DeleteCourse?CourseCode=${CourseCode}`).pipe(
       tap(response => {
       }),
       catchError((error) => {
         console.log(error);
-        return throwError(() => error.error);  // Rethrow the error so it can be handled by the caller
+        return throwError(() => error); // Rethrow the error so it can be handled by the caller
+      })
+    );
+  }
+
+
+  AddnewCourse(course: CourseInfo): Observable<any> {
+    return this.httpclient.post<any>(`${environment.baseUrl}/AddnewCourse`, course)
+      .pipe(
+        tap(response => {
+
+          console.log(response.message)
+        }),
+        catchError((error) => {
+          return throwError(() => error);
+        })
+      );
+  }
+
+  AddnewDepartmentCourse(course: CourseInDepartment): Observable<any> {
+    return this.httpclient.post<any>(`${environment.baseUrl}/AddnewDepartmentCourse`, course)
+      .pipe(
+        tap(response => {
+
+          console.log(response.message)
+        }),
+        catchError((error) => {
+          return throwError(() => error);
+        })
+      );
+  }
+
+  ////////////////////////////////////Admin Mange Doctor///////////////////
+
+
+  GetAllDocotrs(): Observable<Doctor[]> {
+    return this.httpclient.get<Doctor[]>(`${environment.baseUrl}/GetAllDocotrs`).pipe(
+      tap(response => {
+      }),
+      catchError((error) => {
+        console.log(error);
+        return throwError(() => error);  // Rethrow the error so it can be handled by the caller
       })
     );
   }
 
   //I will give back doctor from type DoctorMainInfo and I will take from it message from type any
   AddDoctor(doctor: DoctorMainInfo): Observable<any> {
-    return this.httpclient.post<any>(`${this.baseUrl}/AddDoctor`, doctor).pipe(
+    return this.httpclient.post<any>(`${environment.baseUrl}/AddDoctor`, doctor).pipe(
       tap(response => {
       }),
       catchError((error) => {
-        console.log(error.error);
-        return throwError(() => error.error);  // Rethrow the error so it can be handled by the caller
+        console.log(error);
+        return throwError(() => error);  // Rethrow the error so it can be handled by the caller
       })
     );
   }
@@ -106,108 +167,107 @@ export class ApiAdminService {
   // update  docotr options for courses
   UpdateDoctorOptions(Options: AddEditDoctorOptions): Observable<any> {
     console.log(Options)
-    return this.httpclient.put<any>(`${this.baseUrl}/UpdateDoctorOptions`, Options).pipe(
+    return this.httpclient.put<any>(`${environment.baseUrl}/UpdateDoctorOptions`, Options).pipe(
       tap(response => {
       }),
       catchError((error) => {
         console.log(error);
-        return throwError(() => error.error);  // Rethrow the error so it can be handled by the caller
+        return throwError(() => error);  // Rethrow the error so it can be handled by the caller
       })
     );
   }
 
   // update  docotr options for courses
   AddDoctorOptions(Options: AddEditDoctorOptions): Observable<any> {
-    return this.httpclient.post<any>(`${this.baseUrl}/AddDoctorOptions`, Options).pipe(
+    return this.httpclient.post<any>(`${environment.baseUrl}/AddDoctorOptions`, Options).pipe(
       tap(response => {
       }),
       catchError((error) => {
         console.log(error);
-        return throwError(() => error.error);  // Rethrow the error so it can be handled by the caller
+        return throwError(() => error);  // Rethrow the error so it can be handled by the caller
       })
     );
   }
 
 
   DeleteDoctor(NationalID: string): Observable<any> {
-    return this.httpclient.delete<any>(`${this.baseUrl}/DeleteDoctor`, { body: { nationalId: NationalID } }).pipe(
+    return this.httpclient.delete<any>(`${environment.baseUrl}/DeleteDoctor`, { body: { nationalId: NationalID } }).pipe(
       tap(response => {
       }),
       catchError((error) => {
         console.log(error);
-        return throwError(() => error.error);  // Rethrow the error so it can be handled by the caller
+        return throwError(() => error);  // Rethrow the error so it can be handled by the caller
       })
     );
   }
 
   DeleteDoctoroption(NationalID: string, courseCode: string, department: string): Observable<any> {
-    return this.httpclient.delete<any>(`${this.baseUrl}/DeleteDoctoroption?courseCode=${courseCode}&department=${department}`,
+    return this.httpclient.delete<any>(`${environment.baseUrl}/DeleteDoctoroption?courseCode=${courseCode}&department=${department}`,
       { body: { nationalId: NationalID } }).pipe(
         tap(response => {
         }),
         catchError((error) => {
           console.log(error);
-          return throwError(() => error.error);  // Rethrow the error so it can be handled by the caller
+          return throwError(() => error);  // Rethrow the error so it can be handled by the caller
         })
       );
   }
   ///////////////////////////////student/////////////////////////////////////////
 
   AddStudent(student: Student): Observable<any> {
-    return this.httpclient.post<any>(`${this.baseUrl}/AddStudent`, student).pipe(
+    return this.httpclient.post<any>(`${environment.baseUrl}/AddStudent`, student).pipe(
       tap(response => {
       }),
       catchError((error) => {
-        console.log(error.error);
-        return throwError(() => error.error);  // Rethrow the error so it can be handled by the caller
+        console.log(error);
+        return throwError(() => error);  // Rethrow the error so it can be handled by the caller
       })
     );
   }
 
 
-  GetStudents(Semster: string, Department: string): Observable<StudentData[]> {
-    return this.httpclient.get<StudentData[]>(`${this.baseUrl}/GetStudents?Semster=${Semster}&Department=${Department}`).pipe(
+  GetStudents(Semster: number, Department: string): Observable<StudentData[]> {
+    return this.httpclient.get<StudentData[]>(`${environment.baseUrl}/GetStudents?Semster=${Semster}&Department=${Department}`).pipe(
       tap(response => {
       }),
       catchError((error) => {
         console.log(error);
-        return throwError(() => error.error);  // Rethrow the error so it can be handled by the caller
+        return throwError(() => error);  // Rethrow the error so it can be handled by the caller
       })
     );
   }
 
   GetStudent(AcademicNumber: string): Observable<Student> {
-    return this.httpclient.get<Student>(`${this.baseUrl}/GetStudents?AcademicNumber=${AcademicNumber}`).pipe(
+    return this.httpclient.get<Student>(`${environment.baseUrl}/GetStudents?AcademicNumber=${AcademicNumber}`).pipe(
       tap(response => {
       }),
       catchError((error) => {
         console.log(error);
-        return throwError(() => error.error);  // Rethrow the error so it can be handled by the caller
+        return throwError(() => error);  // Rethrow the error so it can be handled by the caller
       })
     );
   }
-
+  
   uploadExcelsheetForStudent(file: FormData): Observable<any> {
     const formData = new FormData();
-    console.log(this.httpclient.post<any>(`${this.baseUrl}/uploadExcelsheetForStudent`, file));
-    return this.httpclient.post<any>(`${this.baseUrl}/uploadExcelsheetForStudent`, file).pipe(
+    console.log(this.httpclient.post<any>(`${environment.baseUrl}/uploadExcelsheetForStudent`, file));
+    return this.httpclient.post<any>(`${environment.baseUrl}/uploadExcelsheetForStudent`, file).pipe(
       tap(response => {
       }),
       catchError((error) => {
-        console.log(error);
-        return throwError(() => error.error);  // Rethrow the error so it can be handled by the caller
+        return throwError(() => error);  // Rethrow the error so it can be handled by the caller
       })
     );
   }
 
   DeleteStudent(AcademicNumber: string): Observable<any> {
-    console.log(this.httpclient.delete<any>(`${this.baseUrl}/DeleteStudent?AcademicNumber=${AcademicNumber}`));
-    return this.httpclient.delete<any>(`${this.baseUrl}/DeleteStudent?AcademicNumber=${AcademicNumber}`).pipe(
+    console.log(this.httpclient.delete<any>(`${environment.baseUrl}/DeleteStudent?AcademicNumber=${AcademicNumber}`));
+    return this.httpclient.delete<any>(`${environment.baseUrl}/DeleteStudent?AcademicNumber=${AcademicNumber}`).pipe(
       tap(response => {
       }),
       catchError((error) => {
         console.log(error);
-        return throwError(() => error.error);  // Rethrow the error so it can be handled by the caller
+        return throwError(() => error);  // Rethrow the error so it can be handled by the caller
       })
     );
   }
@@ -215,22 +275,22 @@ export class ApiAdminService {
 
   ///////////////////////////////////////////Settings////////////////////////////////
   SendEmail(email: string, subject: string, body: string): Observable<any> {
-    return this.httpclient.post<any>(`${this.baseUrl}/SendEmail?email=${email}&subject=${subject}&body=${body}`, '').pipe(
+    return this.httpclient.post<any>(`${environment.baseUrl}/SendEmail?email=${email}&subject=${subject}&body=${body}`, '').pipe(
       tap(response => {
       }),
       catchError((error) => {
-        return throwError(() => error.error);  // Rethrow the error so it can be handled by the caller
+        return throwError(() => error);  // Rethrow the error so it can be handled by the caller
       })
     );
   }
 
   AddNewHall(HallName: string, Capacity: number): Observable<any> {
-    return this.httpclient.post<any>(`${this.baseUrl}/AddNewHall?HallName=${HallName}&Capacity=${Capacity}`, '').pipe(
+    return this.httpclient.post<any>(`${environment.baseUrl}/AddNewHall?HallName=${HallName}&Capacity=${Capacity}`, '').pipe(
       tap(response => {
       }),
       catchError((error) => {
         console.log(error);
-        return throwError(() => error.error);  // Rethrow the error so it can be handled by the caller
+        return throwError(() => error);  // Rethrow the error so it can be handled by the caller
       })
     );
   }
@@ -238,60 +298,60 @@ export class ApiAdminService {
 
 
   AddNewDepartmentOrGroup(Name: string, Level: string): Observable<any> {
-    return this.httpclient.post<any>(`${this.baseUrl}/AddNewDepartmentOrGroup?Name=${Name}&Level=${Level}`, null).pipe(
+    return this.httpclient.post<any>(`${environment.baseUrl}/AddNewDepartmentOrGroup?Name=${Name}&Level=${Level}`, null).pipe(
       tap(response => {
       }),
       catchError((error) => {
-        console.log(error.error);
-        return throwError(() => error.error);  // Rethrow the error so it can be handled by the caller
+        console.log(error);
+        return throwError(() => error);  // Rethrow the error so it can be handled by the caller
       })
     );
   }
   ////////////////////////////Schule//////////////////////////////////
   GetSchedule(): Observable<Schedule[]> {
 
-    return this.httpclient.get<Schedule[]>(`${this.baseUrl}/GetSchedule`).pipe(
+    return this.httpclient.get<Schedule[]>(`${environment.baseUrl}/GetSchedule`).pipe(
       tap(response => {
       }),
       catchError((error) => {
         console.log(error);
-        return throwError(() => error.error);  // Rethrow the error so it can be handled by the caller
+        return throwError(() => error);  // Rethrow the error so it can be handled by the caller
       })
     );
   }
 
   Schedule(): Observable<InValidCourses[]> {
-    return this.httpclient.get<InValidCourses[]>(`${this.baseUrl}/Schedule`).pipe(
+    return this.httpclient.get<InValidCourses[]>(`${environment.baseUrl}/Schedule`).pipe(
       tap(response => {
       }),
       catchError((error) => {
         console.log(error);
-        return throwError(() => error.error);  // Rethrow the error so it can be handled by the caller
+        return throwError(() => error);  // Rethrow the error so it can be handled by the caller
       })
     );
   }
 
   UpdataHall(couseCode: string, hallName: string, department: string): Observable<any> {
-    return this.httpclient.put<any>(`${this.baseUrl}/UpdataHall?couseCode=${couseCode}&hallName=${hallName}&department=${department}`, null).pipe(
+    return this.httpclient.put<any>(`${environment.baseUrl}/UpdataHall?couseCode=${couseCode}&hallName=${hallName}&department=${department}`, null).pipe(
       tap(response => {
       }),
       catchError((error) => {
         console.log(error);
-        return throwError(() => error.error);  // Rethrow the error so it can be handled by the caller
+        return throwError(() => error);  // Rethrow the error so it can be handled by the caller
       })
     );
   }
 
 
   GetGroupBerLevel(): Observable<{ [key: number]: string[] }> {
-    console.log(this.httpclient.get<{ [key: number]: string[] }>(`${this.baseUrl}/GetGroupBerLevel`))
-    return this.httpclient.get<{ [key: number]: string[] }>(`${this.baseUrl}/GetGroupBerLevel`).pipe(
+    console.log(this.httpclient.get<{ [key: number]: string[] }>(`${environment.baseUrl}/GetGroupBerLevel`))
+    return this.httpclient.get<{ [key: number]: string[] }>(`${environment.baseUrl}/GetGroupBerLevel`).pipe(
       tap(response => {
         console.log('Response:', response);
       }),
       catchError((error) => {
         console.error('Error:', error);
-        return throwError(() => new Error(error.error || 'Server error'));
+        return throwError(() => new Error(error || 'Server error'));
       })
     );
   }

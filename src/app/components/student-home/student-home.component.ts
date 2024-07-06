@@ -10,6 +10,9 @@ import { Schedule } from '../../models/Schedule';
 import { ApiStudentService } from '../../services/api-student.service';
 import { currentStudentData } from '../../models/currentStudentData';
 import { AlertService } from '../../services/alert.service';
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable'
+
 
 // import { ActivatedRoute, NavigationEnd } from '@angular/router';
 // import { filter } from 'rxjs/operators';
@@ -62,6 +65,65 @@ export class StudentHomeComponent implements OnInit {
       }
     });
   }
+
+
+  downloadPDF() {
+    const doc = new jsPDF();
+    interface Entry {
+      doctorName: string;
+      courseName: string;
+      hall: string;
+    }
+
+    const head = [['Time', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday']];
+    const times = ['08:00', '10:00', '12:00', '02:00', '04:00', '06:00'];
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'];
+
+    const body = times.map(time => [
+      time,
+      ...days.map(day => {
+        const entry: Entry = this.myData[day][time] || {}; // Initialize entry object
+
+        // Example: Accessing properties, adjust as per your data structure
+        let doctorName = entry.doctorName + "\n" || '';
+        let courseName = entry.courseName + "\n" || '';
+        let hall = entry.hall || '';
+        if (doctorName[0] == '-') {
+          doctorName = "\n";
+          courseName = "\n";
+          hall = " ";
+        }
+        let cellContent = "";
+        if (doctorName[0] == '\n') {
+          cellContent = `${doctorName} ${courseName} ${hall}`;
+        }
+        else
+          cellContent = `Dr.${doctorName} ${courseName} ${hall}`;
+
+        return cellContent;
+      })
+    ]);
+
+
+
+    autoTable(doc, {
+      head: head,
+      body: body,
+      didDrawCell: (data) => {
+        let raw = data.cell.raw;
+
+        if (typeof raw === 'string' && raw.includes('\n')) {
+          raw = "\n\n\n";
+          const textPos = doc.getTextDimensions(raw);
+          doc.setFontSize(10);
+          doc.text(raw, data.cell.x + data.cell.padding('left'), data.cell.y + textPos.h / 2 + data.cell.padding('top'));
+        }
+      }
+    });
+
+    doc.save(`schedule ${this.currentStudent.name} ${this.currentStudent.department}.pdf`);
+  }
+
 
 
 

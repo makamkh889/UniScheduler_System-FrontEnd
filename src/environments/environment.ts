@@ -1,4 +1,6 @@
 export const environment = {
    production: false,
-   baseUrl:'http://localhost:5088',
+   //baseUrl: 'http://localhost:5088'
+   baseUrl: 'https://fci.runasp.net',
+
 };

@@ -14,7 +14,7 @@
             <mat-label>Nation ID</mat-label>
             <input matInput formControlName="nationalId">
         </mat-form-field>
-        <mat-form-field class="quarter-width">
+        <mat-form-field class="full-width">
             <mat-label>Academic Email</mat-label>
             <input matInput formControlName="email">
         </mat-form-field>
@@ -34,7 +34,7 @@
             <mat-label>Academic Number</mat-label>
             <input matInput formControlName="academicNumber">
         </mat-form-field>
-        <button mat-raised-button color="primary" class="half-width" type="submit">Save</button>
+        <button mat-raised-button color="primary" class="full-width" type="submit">Save</button>
     </form>
 </div>
 
@@ -58,12 +58,19 @@
         </button>
     </div>
 </div>
-
+<div class="file-upload-container">
+    <section [ngSwitch]="status">
+        <p *ngSwitchCase="'uploading'">⏳ Uploading...</p>
+        <p *ngSwitchCase="'success'">✅ Done!</p>
+        <p *ngSwitchCase="'fail'">❌ Error uploading file!</p>
+        <p *ngSwitchDefault>😶 Waiting to upload...</p>
+    </section>
+</div>
 
 <!-- Semester and Department Filter Inputs -->
 <div class="Filter-container">
     <mat-form-field class="half-width">
-        <mat-label>Semester</mat-label>
+        <mat-label>Level</mat-label>
         <input matInput [(ngModel)]="FilterBySemester" placeholder="Enter Semester">
     </mat-form-field>
     <mat-form-field class="half-width">
@@ -95,14 +102,14 @@
             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="AcademicNumber">
+        <ng-container matColumnDef="academicNumber">
             <th mat-header-cell *matHeaderCellDef> Academic Number </th>
-            <td mat-cell *matCellDef="let element"> {{element.AcademicNumber}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.academicNumber}} </td>
         </ng-container>
 
         <!-- Nation ID Column -->
         <ng-container matColumnDef="nationalId">
-            <th mat-header-cell *matHeaderCellDef> Nation ID </th>
+            <th mat-header-cell *matHeaderCellDef> Nationl ID </th>
             <td mat-cell *matCellDef="let element"> {{element.nationalId}} </td>
         </ng-container>
 
@@ -128,7 +135,7 @@
         <ng-container matColumnDef="Actions">
             <th mat-header-cell *matHeaderCellDef> Actions </th>
             <td mat-cell *matCellDef="let element">
-                <button mat-icon-button (click)="deleteStudent(element)">
+                <button mat-icon-button (click)="deleteStudent(element.academicNumber)">
                     <i class="fa-solid fa-trash" style="color: #e01b24;"></i>
                 </button>
             </td>
@@ -144,71 +151,5 @@
         </tr>
 
     </table>
-
-
-
-
-    <!--  
-    <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z6">
-        <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="AcademicNumber">
-            <th mat-header-cell *matHeaderCellDef> Academic Number </th>
-            <td mat-cell *matCellDef="let element"> {{element.AcademicNumber}} </td>
-        </ng-container>
-    
-        <ng-container matColumnDef="nationalId">
-            <th mat-header-cell *matHeaderCellDef> National ID </th>
-            <td mat-cell *matCellDef="let element"> {{element.nationalId}} </td>
-        </ng-container>
-    
-        <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef> Email </th>
-            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-        </ng-container>
-    
-        <ng-container matColumnDef="department">
-            <th mat-header-cell *matHeaderCellDef> Department </th>
-            <td mat-cell *matCellDef="let element"> {{element.department}} </td>
-        </ng-container>
-    
-        <ng-container matColumnDef="gpa">
-            <th mat-header-cell *matHeaderCellDef> GPA </th>
-            <td mat-cell *matCellDef="let element"> {{element.gpa}} </td>
-        </ng-container>
-    
-        <ng-container matColumnDef="expand">
-            <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
-            <td mat-cell *matCellDef="let element">
-                <button mat-icon-button aria-label="expand row"
-                    (click)="expandedElement = expandedElement === element ? null : element; $event.stopPropagation()">
-                    <mat-icon>{{ expandedElement === element ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
-                </button>
-            </td>
-        </ng-container>
-    
-        <ng-container matColumnDef="expandedDetail">
-            <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
-                <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                    <div>
-                        <strong>Courses:</strong>
-                        <ul>
-                            <li *ngFor="let course of element.currentCourses">{{ course }}</li>
-                        </ul>
-                    </div>
-                </div>
-            </td>
-        </ng-container>
-    
-        <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
-        <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;" class="example-element-row"
-            [class.example-expanded-row]="expandedElement === element"
-            (click)="expandedElement = expandedElement === element ? null : element">
-        </tr>
-        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-    </table>  -->
 
 </div>

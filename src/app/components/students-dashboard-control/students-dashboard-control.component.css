@@ -8,7 +8,7 @@ input[type="file"] {
     display: flex;
     justify-content: center;
     align-items: center;
-   margin: 20px;
+    margin: 20px;
    
     /* Adjust as needed to center vertically */
 }
@@ -75,7 +75,8 @@ i{
 
 .full-width {
     width: 100%;
-    margin: 10px 0;
+    padding-right: 50px;
+    padding-left: 50px;
 }
 
 .half-width {

@@ -5,8 +5,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
+    height: 100%;
 }
 
 .registration-container {
@@ -17,7 +16,7 @@ body {
 }
 
 .registration-form {
-    background-color: #d3d3d3;
+    background-color: #b7ccd3;
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -27,7 +26,7 @@ body {
 }
 
 .registration-form h2 {
-    color: #4d0166;
+    color: #012f3a;
     margin-bottom: 20px;
 }
 
@@ -39,7 +38,7 @@ body {
 .form-group label {
     display: block;
     margin-bottom: 5px;
-    color: #4d0166;
+    color: #012f3a;
 }
 
 .form-group input {
@@ -51,7 +50,7 @@ body {
 }
 
 .btn {
-    background-color: #4d0166;
+    background-color: #012f3a;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -60,6 +59,39 @@ body {
 }
 
 .btn:hover {
-    background-color: #343446;
+    background-color: #3db2cc;
     transform: translate(5px, -5px);
+}
+
+
+
+
+/* edition from here */
+
+.form-group.has-error input {
+    border-color: #ff0000;
+    /* Red border for invalid input */
+}
+
+.error-message {
+    color: #ff0000;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+
+.btn[disabled] {
+    background-color: #012f3a;
+    cursor: not-allowed;
+}
+
+
+.login-error-box {
+    margin-bottom: 3px;
+    /* padding: 10px;
+    border: 1px solid #ff0000;
+    border-radius: 5px;
+    background-color: #ffe5e5; */
+    color: #ff0000;
+    text-align: center;
 }

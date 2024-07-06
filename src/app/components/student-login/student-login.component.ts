@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   Router,
   RouterLink,
@@ -17,21 +16,24 @@ import { UserAuthenticationService } from '../../services/user-authentication.se
 @Component({
   selector: 'app-student-login',
   standalone: true,
-  imports: [RouterLink, RouterOutlet, CommonModule, FormsModule],
+  imports: [RouterLink, RouterOutlet,CommonModule, FormsModule, ReactiveFormsModule, FormsModule],
   templateUrl: './student-login.component.html',
   styleUrl: './student-login.component.css',
 })
-export class StudentLoginComponent {
+export class StudentLoginComponent implements OnInit {
   ShowStudentLogin!: boolean;
   _UserAuth: UserAuth = {} as UserAuth;
    StudentID: string = '';
   password: string = '';
+  studentForm: FormGroup = {} as FormGroup;
+  loginError = false;
 
   constructor(
     private router: Router,
     private _activatedRoute: ActivatedRoute,
     private _alertService: AlertService,
-    private authService: UserAuthenticationService
+    private authService: UserAuthenticationService,
+    private fb: FormBuilder
   ) {
 
     // Listen to route changes to correctly setshowHome to appear child or parnet
@@ -43,6 +45,13 @@ export class StudentLoginComponent {
     this.ShowStudentLogin = true;
   }
 
+  ngOnInit(): void {
+    this.studentForm = this.fb.group({
+      StudentID: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
+
 
   checkLogin() {
     this._UserAuth.userName = this.StudentID;
@@ -52,9 +61,11 @@ export class StudentLoginComponent {
       next: (response) => {
         console.log('Login successful');
         this.ShowStudentLogin = false;
+        this.loginError = false;
         this.router.navigate(['/Home/StudentLogin/StudentHome']);
       },
       error: (error) => {
+        this.loginError = true;
         console.error('Login failed', error);
       }
     });

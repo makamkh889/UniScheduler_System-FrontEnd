@@ -1,6 +1,7 @@
 import { doctorHomeOptions } from "./doctorHomeOptions"
 
 export interface doctorHomeOptionsView extends doctorHomeOptions {
-    AddCourseOption: boolean
-    EditCourseOption: boolean
+    AddCourseOption: boolean,
+    EnrolledStudentsCount:number
+    EditCourseOption: boolean,
 }

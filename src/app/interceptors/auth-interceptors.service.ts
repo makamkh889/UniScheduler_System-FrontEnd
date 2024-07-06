@@ -15,17 +15,12 @@ export function AuthInterceptors(req: HttpRequest<any>, next: HttpHandlerFn) {
      console.log(Modified_req);
      return next(Modified_req).pipe(
           tap(response => {
-
-
-               // if (event.type == HttpEventType.Response) {
-               //      if (event.status == 200) { }
-               //      else if (event.status == 500) { }
-               // }
+ 
 
           }),
           catchError((error) => {
                console.log(Modified_req);
-               return throwError(() => error.error);  // Rethrow the error so it can be handled by the caller
+               return throwError(() => error);  // Rethrow the error so it can be handled by the caller
           })
      );
 }

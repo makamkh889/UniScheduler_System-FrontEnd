@@ -1,0 +1,88 @@
+.container-lg {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: 100%;
+    overflow: hidden;
+    margin-top:  30px;
+}
+
+.inner-table {
+    border-radius: 30px;
+}
+
+table {
+    width: 80%;
+}
+
+i {
+    font-size: 17px;
+    margin: 0 5px;
+    cursor: pointer;
+    color: #0c7c01;
+}
+
+.mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+tr.example-detail-row {
+    height: 0;
+}
+
+
+tr.example-element-row:not(.example-expanded-row):hover {
+    background: #a6c6ce;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+}
+
+.example-element-row td {
+    border-bottom-width: 0;
+}
+
+.example-element-detail {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.example-element-course {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+}
+
+.example-element-course-code {
+    font-weight: bold;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.selecttime {
+    padding: 5px;
+}
+
+.expanded {
+    /* Style for expanded rows */
+}
+
+.group-name {
+    flex: 1;
+}
+
+.group-members {
+    flex: 1;
+}

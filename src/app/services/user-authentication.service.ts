@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { UserAuth } from '../models/user-auth';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class UserAuthenticationService {
 
 
   private UserAuthSubject: BehaviorSubject<boolean>;
-  baseUrl: string = 'http://localhost:5088';
+  //baseUrl: string = 'http://unischedulermaker.runasp.net';
   private isAdminLoggedIn = false;
   private isDoctorLoggedIn = false;
   private isStudentLoggedIn = false;
@@ -22,7 +23,7 @@ export class UserAuthenticationService {
   }
 
 
-  login(role: 'admin' | 'doctor' | 'student', UserAuth: UserAuth): Observable<any>{
+  login(role: 'admin' | 'doctor' | 'student', UserAuth: UserAuth): Observable<any> {
     this.logout();
     let loginObservable: Observable<any>
 
@@ -42,8 +43,8 @@ export class UserAuthenticationService {
         console.log(`${role} login successful`);
       }),
       catchError(error => {
-        console.error('Login error:', error);
-        return throwError(error);
+        // console.error('Login error:', error);
+        return error;
       })
     );
 
@@ -86,7 +87,7 @@ export class UserAuthenticationService {
 
 
   LoginAPI(UserAuth: UserAuth): Observable<any> {
-    console.log(this.httpclient.post<any>(`${this.baseUrl}/Login`, UserAuth))
-    return this.httpclient.post<any>(`${this.baseUrl}/Login`, UserAuth);
+    console.log(this.httpclient.post<any>(`${environment.baseUrl}/Login`, UserAuth))
+    return this.httpclient.post<any>(`${environment.baseUrl}/Login`, UserAuth);
   }
 }

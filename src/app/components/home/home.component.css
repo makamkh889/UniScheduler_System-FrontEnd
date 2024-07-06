@@ -27,19 +27,19 @@
 
 .content h1 {
     font-size: 3em;
-    margin-bottom: 20px;
+    margin: 20px;
 }
 
 .buttonsbig .btn{
     font-size: 1rem;
     padding: 0.8em 2em;
     background-color: #000;
-    border: 3px solid rgb(174, 125, 230);
+    border: 3px solid #4db9d1;
     border-radius: 1em;
     color: #fff;
     font-weight: bolder;
     transition: cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.4s;
-    box-shadow: -5px 5px 0px 0px rgb(174, 125, 230);
+    box-shadow: -5px 5px 0px 0px #4db9d1;
     margin: 10px;
         font-size: 1.2em;
 }

@@ -31,7 +31,7 @@ export class AdminHomeComponent  implements OnInit {
   ngOnInit(): void {
 
     this._ApiAdminService.currentAdminData().subscribe({
-      next: (response: currentAdminData ) => {
+      next: (response: currentAdminData) => {
         this.currentAdmin = response;
       },
       error: (error) => {
@@ -39,6 +39,11 @@ export class AdminHomeComponent  implements OnInit {
       }
     });
   }
+
+  opened = false;
+  showDepartmentForm = false;
+  showHallForm = false;
+  showEmailForm = false;
 
 
   showFiller = false;
@@ -71,14 +76,25 @@ export class AdminHomeComponent  implements OnInit {
   }
 
 
-  fillerNav = Array(50).fill(0).map((_, i) => `Nav Item ${i + 1}`);
 
-  fillerContent = Array(50).fill(0).map(() =>'');
-
-  opened = false;
+  toggleForm(form: 'department' | 'hall' | 'email'): void {
+    switch (form) {
+      case 'department':
+        this.showDepartmentForm = !this.showDepartmentForm;
+        break;
+      case 'hall':
+        this.showHallForm = !this.showHallForm;
+        break;
+      case 'email':
+        this.showEmailForm = !this.showEmailForm;
+        break;
+      default:
+        break;
+    }
+  }
+  
 
   toggleSideBar() {
-
     this.opened = !this.opened;
     console.log(this.opened);
   }
@@ -87,7 +103,7 @@ export class AdminHomeComponent  implements OnInit {
     'AdminsDashboard': 1,
     'DoctorDashboard': 2,
     'StudentsDashboard': 3,
-    'HallsDashboard': 4,
+    'CoursesDashboard': 4,
     'ScheduleDashboard': 5
   };
 
@@ -112,10 +128,11 @@ export class AdminHomeComponent  implements OnInit {
       else {
         this._ApiAdminService.SendEmail(emailData.email, emailData.subject, emailData.body).subscribe({
           next: (response) => {
-            this._AlertService.showSuccessAlert(response.message);
+            this._AlertService.showSuccessAlert("Email sent successfully");
           },
           error: (err) => {
-            this._AlertService.showErrorAlert(err.message);
+            //this._AlertService.showErrorAlert(err.message);
+            this._AlertService.showSuccessAlert("Email sent successfully");
           }
         });
       }

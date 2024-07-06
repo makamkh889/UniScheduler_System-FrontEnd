@@ -16,6 +16,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="selecttime d-flex align-items-center justify-content-between">
                 <ng-container *ngIf="RegisterMode">
                     <div class="d-flex align-items-center justify-content-between">
@@ -52,6 +53,9 @@
                     <button class="btn btn-icon btn-danger" (click)="CancelSchedule()">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
+                    <button mat-button class="download" (click)="downloadPDF()">
+                        <img src="assets/download.png" alt="Icon" style="width: 25px; height: 25px;">
+                    </button>
                 </div>
                 <table class="table table-bordered table-hover">
                     <thead>
@@ -75,10 +79,10 @@
                                     <div [id]="day + '-' + time + '-details'" class="collapse">
                                         <ng-container *ngFor="let course of myData[day][time].courseName.split(',')">
                                             <div *ngIf="course.trim() !== '-'">
-                                                <p>{{ course.trim() }}</p>
-                                                <p>Dr: {{ myData[day][time].doctorName }}</p>
-                                                <p>Hall: {{ myData[day][time].hall }}</p>
-                                                <p>Code: {{ myData[day][time].courseCode }}</p>
+                                                <h6>{{ course.trim() }}</h6>
+                                                <h6>Dr: {{ myData[day][time].doctorName }}</h6>
+                                                <h6>Hall: {{ myData[day][time].hall }}</h6>
+                                                <h6>Code: {{ myData[day][time].courseCode }}</h6>
                                                 <hr>
                                             </div>
                                         </ng-container>
@@ -89,9 +93,9 @@
                                         {{ myData[day][time].courseName }}
                                     </button>
                                     <div [id]="day + '-' + time + '-details'" class="collapse">
-                                        <p>Dr: {{ myData[day][time].doctorName }}</p>
-                                        <p>Hall: {{ myData[day][time].hall }}</p>
-                                        <p>Code: {{ myData[day][time].courseCode }}</p>
+                                        <h6>Dr: {{ myData[day][time].doctorName }}</h6>
+                                        <h6>Hall: {{ myData[day][time].hall }}</h6>
+                                        <h6>Code: {{ myData[day][time].courseCode }}</h6>
                                     </div>
                                 </ng-template>
                             </td>

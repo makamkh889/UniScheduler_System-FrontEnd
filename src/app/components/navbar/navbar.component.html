@@ -1,14 +1,37 @@
 <div class="header-container">
-    <div class="header-left">
-        <img src="/assets/logo.png" alt="Header Image" class="header-image">
-        <h1 class="header-title">Faculty of Computers and Information </h1>
+    <div class="col-sm-8 header-left">
+        <button class="admin-button" (click)="goHome('main')">
+            <img src="/assets/logo1.png" alt="Header Image" height="170px" width="240px" class="header-image">
+        </button>
     </div>
-    <div class="header-center">
+
+    <div class="col-sm-2 header-admin" *ngIf="currentRoute === 'admin'">
+        <div class="button-container">
+            <button class="admin-button" (click)="goHome('admin')">
+                <mat-icon>home</mat-icon>
+            </button>
+            <button class="admin-button" (click)="goHome('main')">
+                <mat-icon>logout</mat-icon>
+            </button>
+
+            <!-- <button routerLink="/manage-doctors" class="admin-button" (click)="navigateTo('Doctor')">Doctors
+                Dashboard</button>
+            <button routerLink="/manage-students" class="admin-button"
+                (click)="navigateTo('Students')">Students
+                Dashboard</button>
+            <button routerLink="/schedule-courses" class="admin-button"
+                (click)="navigateTo('Schedule')">Schedule
+                Courses</button> -->
+        </div>
+    </div>
+
+
+    <div class="header-center" *ngIf="currentRoute === 'normal'">
         <a href="https://www.facebook.com/profile.php?id=100057545794964&ref=hl" target="_blank" class="social-link">
             <i class="fab fa-facebook-f"></i>
         </a>
         <a href="https://x.com/fci_aun" target="_blank" class="social-link">
-        <i class="fa-brands fa-twitter"></i>
+            <i class="fa-brands fa-twitter"></i>
         </a>
         <a href="https://www.youtube.com/channel/UCHUxCMIM9gt1ipazny-63zA" target="_blank" class="social-link">
             <i class="fab fa-youtube"></i>
@@ -17,15 +40,4 @@
             <i class="fa-brands fa-google"></i>
         </a>
     </div>
-    <!-- <div class="header-right">
-        <ul ngbNav #nav="ngbNav" class="nav-tabs">
-            <li ngbNavItem>
-                <button ngbNavLink>Home</button>
-            </li>
-            <li ngbNavItem>
-                <button ngbNavLink>Sign in</button>
-            </li>
-        </ul>
-        <div [ngbNavOutlet]="nav"></div>
-    </div> -->
 </div>

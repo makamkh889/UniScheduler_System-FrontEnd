@@ -1,0 +1,164 @@
+<div class="container-lg">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <h2>Course Management</h2>
+                    </div>
+                    <div class="col-sm-3 text-right">
+                        <button type="button" class="btn btn-info add-new" (click)="AddCourse()">
+                            Add New Course
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <mat-form-field>
+                <mat-label>Search</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Search ..." #input>
+            </mat-form-field>
+
+            <table #table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+                <ng-container matColumnDef="courseName">
+                    <th mat-header-cell *matHeaderCellDef> Course Name </th>
+                    <td mat-cell *matCellDef="let element">
+                        @if(element.addCourse){
+                        <input type="text" [(ngModel)]="element.courseName" placeholder="Enter Course Name">
+                        }
+                        @else{
+                        {{element.courseName}}
+                        }
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="courseCode">
+                    <th mat-header-cell *matHeaderCellDef> Course Code </th>
+                    <td mat-cell *matCellDef="let element">
+                        @if(element.addCourse){
+                        <input type="text" #nameInput [(ngModel)]="element.courseCode" placeholder="Enter course Code">
+                        }
+                        @else{
+                        {{element.courseCode}}
+                        }
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="prerequisites">
+                    <th mat-header-cell *matHeaderCellDef> Prerequisites </th>
+                    <td mat-cell *matCellDef="let element">
+                        @if(element.addCourse){
+                        <input type="text" [(ngModel)]="element.prerequisites" placeholder="Enter Prerequisites">
+                        }
+                        @else{
+                        {{element.prerequisites}}
+                        }
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="creditHour">
+                    <th mat-header-cell *matHeaderCellDef> Credit Hour </th>
+                    <td mat-cell *matCellDef="let element">
+                        @if(element.addCourse){
+                        <input type="text" [(ngModel)]="element.creditHour" placeholder="Enter credit Hour">
+                        }
+                        @else{
+                        {{element.creditHour}}
+                        }
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="expand">
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button aria-label="expand row" (click)="toggleRow(element)">
+                            <mat-icon>{{expandedElement === element ? 'keyboard_arrow_up' :
+                                'keyboard_arrow_down'}}</mat-icon>
+                        </button>
+                        @if(element.addCourse){
+                        <button mat-icon-button aria-label="add row" (click)="SaveCourse(element)">
+                            <i class="fa-solid fa-square-check" style="color: #26a269;"></i>
+                        </button>
+                        <button mat-icon-button aria-label="delete row" (click)="Cancel(element)">
+                            <i class="fa-solid fa-xmark" style="color: #000000;"></i>
+                        </button>
+                        }@else{
+                        <button mat-icon-button aria-label="add row" (click)="addCoursesinDepartment(element)">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <button mat-icon-button aria-label="delete row" (click)="deleteCourse(element)">
+                            <i class="fa-solid fa-trash" style="color: #e01b24;"></i>
+                        </button>
+                        }
+                    </td>
+                </ng-container>
+
+                <!-- Expanded Content Column -->
+                <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
+                        <div class="example-element-detail"
+                            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                            <table class="inner-table mat-elevation-z8">
+                                <thead>
+                                    <tr>
+                                        <th>Department Name</th>
+                                        <th>Semester</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let course of element.courses">
+                                        <td class="selecttime">
+                                            @if(course.addcourseDepartment){
+                                            <input type="text" [(ngModel)]="course.departmentName"
+                                                placeholder="Enter Department Name">
+                                            }
+                                            @else{
+                                            {{course.departmentName}}
+                                            }
+                                        </td>
+                                        <td class="selecttime">
+                                            @if(course.addcourseDepartment){
+                                            <input type="text" [(ngModel)]="course.semaster"
+                                                placeholder="Enter Semaster">
+                                            }
+                                            @else{
+                                            {{course.semaster}}
+                                            }
+                                        </td>
+                                        <td class="selecttime">
+                                            @if(course.addcourseDepartment&& course.courseCode==''){
+                                            <button mat-icon-button aria-label="add row" (click)="SaveCourseindepartment(element,course)">
+                                                <i class="fa-solid fa-square-check" style="color: #26a269;"></i>
+                                            </button>
+                                            <button mat-icon-button aria-label="delete row" (click)="Cancelfromdepartment(element,course)">
+                                                <i class="fa-solid fa-xmark" style="color: #000000;"></i>
+                                            </button>
+                                            }@else{
+                                            <button mat-icon-button aria-label="delete row" (click)="DeleteCourseFromDepartment(course)">
+                                                <i class="fa-solid fa-trash" style="color: #e01b24;"></i>
+                                            </button>
+                                            }
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+                <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;" class="example-element-row"
+                    [class.example-expanded-row]="expandedElement === element">
+                </tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="6">No data matching the filter "{{input.value}}"</td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</div>

@@ -10,11 +10,12 @@
             Dashboard</button>
         <button routerLink="/manage-students" class="admin-button" (click)="navigateTo('Students')">Students
             Dashboard</button>
-        <button routerLink="/manage-halls" class="admin-button" (click)="navigateTo('Halls')">Halls
+        <button routerLink="/manage-halls" class="admin-button" (click)="navigateTo('Courses')">Courses
             Dashboard</button>
         <button routerLink="/schedule-courses" class="admin-button" (click)="navigateTo('Schedule')">Schedule
             Courses</button>
     </div>
+
 
 
     <div class="top-right">
@@ -23,67 +24,80 @@
         </button>
     </div>
 
-    <mat-drawer-container>
+    <mat-drawer-container autosize>
+
         <mat-sidenav #sidenav class="side-nav-left" position="start" role="directory" [opened]="opened">
             <div class="side-nav-content">
-                <div class="backdrop" (click)="opened = false"></div>
 
-                <form [formGroup]="emailForm" (ngSubmit)="onSubmit()">
+                <div>
+                    <button  class="Appearform" (click)="toggleForm('email')">
+                        Send Email
+                    </button>
+                    <form *ngIf="showEmailForm" [formGroup]="emailForm" (ngSubmit)="onSubmit()">
 
-                    <mat-form-field class="half-width">
-                        <mat-label>Email</mat-label>
-                        <input matInput formControlName="email">
-                    </mat-form-field>
+                        <mat-form-field class="half-width">
+                            <mat-label>Email</mat-label>
+                            <input matInput formControlName="email">
+                        </mat-form-field>
 
-                    <mat-form-field class="half-width">
-                        <mat-label>Subject</mat-label>
-                        <input matInput formControlName="subject">
-                    </mat-form-field>
+                        <mat-form-field class="half-width">
+                            <mat-label>Subject</mat-label>
+                            <input matInput formControlName="subject">
+                        </mat-form-field>
 
-                    <mat-form-field class="full-width">
-                        <mat-label>Body</mat-label>
-                        <input matInput formControlName="body">
-                    </mat-form-field>
+                        <mat-form-field class="full-width">
+                            <mat-label>Body</mat-label>
+                            <input matInput formControlName="body">
+                        </mat-form-field>
 
-                    <button [disabled]="emailForm.invalid" color="Saveform" class="full-width"
-                        type="submit">Save</button>
-                </form>
+                        <button mat-raised-button [disabled]="emailForm.invalid" style="color: 012f3a;" class="full-width"
+                            type="submit">Save</button>
+                    </form>
+                </div>
+
+                <div>
+                    <button  class="Appearform" (click)="toggleForm('hall')">
+                        ADD HALL 
+                    </button>
+                    <form *ngIf="showHallForm" [formGroup]="HallForm" (ngSubmit)="onSubmitHallForm()">
+
+                        <mat-form-field class="half-width">
+                            <mat-label>Capacity</mat-label>
+                            <input matInput formControlName="Capacity">
+                        </mat-form-field>
+
+                        <mat-form-field class="half-width">
+                            <mat-label>HallName</mat-label>
+                            <input matInput formControlName="HallName">
+                        </mat-form-field>
+
+                        <button  mat-raised-button  [disabled]="HallForm.invalid" style="color: 012f3a;" class="full-width"
+                            type="submit">Save</button>
+                    </form>
+                </div>
 
 
-                <form [formGroup]="HallForm" (ngSubmit)="onSubmitHallForm()">
+                <div>
+                    <button  class="Appearform" (click)="toggleForm('department')">
+                       ADD DEPARTMENT
+                    </button>
+                    <form *ngIf="showDepartmentForm" [formGroup]="DepartmentForm" (ngSubmit)="onSubmitDepatmentForm()">
 
-                    <mat-form-field class="half-width">
-                        <mat-label>Capacity</mat-label>
-                        <input matInput formControlName="Capacity">
-                    </mat-form-field>
+                        <mat-form-field class="half-width">
+                            <mat-label>Name</mat-label>
+                            <input matInput formControlName="Name">
+                        </mat-form-field>
 
-                    <mat-form-field class="half-width">
-                        <mat-label>HallName</mat-label>
-                        <input matInput formControlName="HallName">
-                    </mat-form-field>
+                        <mat-form-field class="half-width">
+                            <mat-label>Level</mat-label>
+                            <input matInput formControlName="Level">
+                        </mat-form-field>
 
-                    <button [disabled]="HallForm.invalid" color="Saveform" class="full-width"
-                        type="submit">Save</button>
-                </form>
-
-                <form [formGroup]="DepartmentForm" (ngSubmit)="onSubmitDepatmentForm()">
-
-                    <mat-form-field class="half-width">
-                        <mat-label>Name</mat-label>
-                        <input matInput formControlName="Name">
-                    </mat-form-field>
-
-                    <mat-form-field class="half-width">
-                        <mat-label>Level</mat-label>
-                        <input matInput formControlName="Level">
-                    </mat-form-field>
-
-                    <button [disabled]="DepartmentForm.invalid" color="Saveform" class="full-width"
-                        type="submit">Save</button>
-                </form>
-
+                        <button mat-raised-button [disabled]="DepartmentForm.invalid" style="color: 012f3a;" class="full-width"
+                            type="submit">Save</button>
+                    </form>
+                </div>
             </div>
-
         </mat-sidenav>
     </mat-drawer-container>
 

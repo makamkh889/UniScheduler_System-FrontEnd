@@ -118,6 +118,16 @@
                         </td>
                     </ng-container>
 
+                    <!-- count student hows record this course Column -->
+                    <ng-container matColumnDef="EnrolledStudentsCount">
+                        <th mat-header-cell *matHeaderCellDef> Enrolled Students Count </th>
+                        <td mat-cell *matCellDef="let element">
+                            <ng-template>
+                                {{ element.EnrolledStudentsCount }}
+                            </ng-template>
+                        </td>
+                    </ng-container>
+
                     <!-- Actions Column -->
                     <ng-container matColumnDef="actions">
                         <th mat-header-cell *matHeaderCellDef> Actions </th>
@@ -151,11 +161,14 @@
                     <button class="btn btn-icon btn-danger" (click)="CancelSchedule()">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
+                    <button mat-button class="download" (click)="downloadPDF()">
+                        <img src="assets/download.png" alt="Icon" style="width: 20px; height: 20px;">
+                    </button>
                 </div>
 
                 <table table-bordered table-hover>
                     <thead>
-                        <tr>
+                        <tr style="text-align: center;">
                             <th>Time</th>
                             <th>Sunday</th>
                             <th>Monday</th>
@@ -189,9 +202,9 @@
                                             </div>
                                         </ng-container>
                                     </ng-container>
-                                    <ng-container *ngIf="!myData[day][time].isDuplicate">
-                                        <p>Hall: {{ myData[day][time].hall }}</p>
-                                        <p>Department: {{ myData[day][time].department }}</p>
+                                    <ng-container *ngIf="!myData[day][time].isDuplicate" style="padding: 3px;">
+                                        <h6>Hall: {{ myData[day][time].hall }}</h6>
+                                        <h6>Department: {{ myData[day][time].department }}</h6>
                                     </ng-container>
                                 </div>
                             </td>

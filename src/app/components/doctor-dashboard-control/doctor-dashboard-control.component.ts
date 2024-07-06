@@ -18,6 +18,8 @@ import { DoctorOptionsView } from '../../models/doctor-options-view';
 import { DoctorMainInfo } from '../../models/doctor-main-info';
 import { ApiAdminService } from '../../services/api-admin.service';
 import { AddEditDoctorOptions } from '../../models/add-edit-doctor-options';
+import { ViewChild, ElementRef } from '@angular/core';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'app-doctor-dashboard-control',
@@ -36,6 +38,9 @@ import { AddEditDoctorOptions } from '../../models/add-edit-doctor-options';
 
 export class DoctorDashboardControlComponent implements OnInit {
 
+
+  @ViewChild('table', { static: false }) table!: MatTable<any>;
+  @ViewChild('nameInput', { static: false }) nameInput!: ElementRef;
 
   AddnewCourse: AddEditDoctorOptions = {} as AddEditDoctorOptions;
   AddnewDoctor: DoctorMainInfo = {} as DoctorMainInfo;
@@ -77,7 +82,6 @@ export class DoctorDashboardControlComponent implements OnInit {
   ngOnInit(): void {
     this._ApiAdminService.GetAllDocotrs().subscribe({
       next: (doctors: Doctor[]) => {
-        console.log(doctors)
         this.ELEMENT_DATA = doctors.map(doctor => ({
           name: doctor.name,
           email: doctor.email,
@@ -100,7 +104,7 @@ export class DoctorDashboardControlComponent implements OnInit {
 
       },
       error: (error) => {
-        console.error('Error fetching doctors:', error);
+        //console.error('Error fetching doctors:', error);
       }
     });
   }
@@ -123,6 +127,12 @@ export class DoctorDashboardControlComponent implements OnInit {
     });
     this.dataSource.data = this.ELEMENT_DATA; // Update the data source
 
+
+    // Delay to ensure the new row is rendered before focusing and scrolling
+    setTimeout(() => {
+      this.nameInput.nativeElement.focus();
+      this.nameInput.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 0);
   }
 
   SaveDoctor(doctor: DoctorView) {
@@ -210,6 +220,7 @@ export class DoctorDashboardControlComponent implements OnInit {
           this.dataSource.data = this.ELEMENT_DATA;
         },
         error: (err) => {
+          console.log(err.message);
           this._AlertService.showErrorAlert(err.message);
         }
       });
@@ -228,7 +239,6 @@ export class DoctorDashboardControlComponent implements OnInit {
           course.EditCourseOption = false;
           course.AddCourseOption = false;
           this.dataSource.data = this.ELEMENT_DATA;
-          console.log(doctor, course.EditCourseOption)
         }
         else {
 
@@ -251,6 +261,7 @@ export class DoctorDashboardControlComponent implements OnInit {
       this.AddnewCourse.option3 = this.getStoredValue(course.option3);
       this.AddnewCourse.group = course.gruop;
       this._ApiAdminService.UpdateDoctorOptions(this.AddnewCourse).subscribe({
+        
         next: (response) => {
           this._AlertService.showSuccessAlert(response.message);
           const doctorIndex = this.ELEMENT_DATA.findIndex(d => d.nationalId === doctor.nationalId);
@@ -265,6 +276,7 @@ export class DoctorDashboardControlComponent implements OnInit {
           }
         },
         error: (err) => {
+          console.log(err.message)
           this._AlertService.showErrorAlert(err.message);
         }
       });
@@ -276,13 +288,12 @@ export class DoctorDashboardControlComponent implements OnInit {
       next: (response) => {
         const doctorIndex = this.ELEMENT_DATA.findIndex(d => d.nationalId === doctor.nationalId);
         if (doctorIndex !== -1) {
-          const courseIndex = this.ELEMENT_DATA[doctorIndex].courseNames.findIndex(c => c.courseCode === course.courseCode);
+          const courseIndex = this.ELEMENT_DATA[doctorIndex].courseNames.findIndex(c => c.courseCode === course.courseCode && c.gruop == course.gruop);
           if (courseIndex !== -1) {
             // Remove the course at the found index
             this.ELEMENT_DATA[doctorIndex].courseNames.splice(courseIndex, 1);
             // Refresh the data source
             this.dataSource.data = this.ELEMENT_DATA;
-            console.log(doctor, courseIndex);
           }
         }
         this.dataSource.data = this.ELEMENT_DATA;

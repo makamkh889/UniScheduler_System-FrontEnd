@@ -1,38 +1,31 @@
 @if(ShowAdminLogin){
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-</head>
-
 <body>
     <div class="registration-container">
         <div class="registration-form">
             <h2>Admin Registration</h2>
-            
-            <form>
+            <form [formGroup]="adminForm" (ngSubmit)="CheckLogin()">
                 <div class="form-group">
                     <label for="student-id">Admin ID</label>
-                    <input type="text" [(ngModel)]="AdminID"  name="AdminID" id="AdminID"  placeholder="National ID" />
+                    <input type="text" [(ngModel)]="AdminID" formControlName="AdminID" name="AdminID" id="AdminID"
+                        placeholder="National ID" />
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" [(ngModel)]="password" name="password" id="password"  placeholder="Password" />
+                    <input type="password" [(ngModel)]="password" formControlName="password" name="password"
+                        id="password" placeholder="Password" />
                 </div>
-                <button type="submit" class="btn" (click)="CheckLogin()">
+                <div *ngIf="loginError" class="login-error-box">
+                 Invalid Admin ID or Password
+                </div>
+                <button type="submit" class="btn" [disabled]="adminForm.invalid">
                     Login
                 </button>
-            </form>
-
-
+           </form>
         </div>
     </div>
 </body>
 
-</html>
 }
 @else {
-    <router-outlet></router-outlet>
+<router-outlet></router-outlet>
 }

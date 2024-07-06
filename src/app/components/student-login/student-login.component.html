@@ -2,16 +2,19 @@
     <div class="registration-container">
         <div class="registration-form">
             <h2>Student Registration</h2>
-            <form>
+            <form [formGroup]="studentForm" (ngSubmit)="checkLogin()">
                 <div class="form-group">
-                    <label for="student-id">Student Academic Number</label>
-                    <input type="text" [(ngModel)]="StudentID" name="StudentID" id="student-id" placeholder="Academic number" />
+                    <label for="student-id">Student ID</label>
+                    <input type="text" [(ngModel)]="StudentID"  formControlName="StudentID" name="StudentID" id="student-id" placeholder="Academic number" />
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" [(ngModel)]="password"  name="password" id="password" placeholder="Password" />
+                    <input type="password" [(ngModel)]="password" formControlName="password"  name="password" id="password" placeholder="Password" />
                 </div>
-                <button class="btn" (click)="checkLogin()">
+                <div *ngIf="loginError" class="login-error-box">
+                    Invalid student ID or password
+                </div>
+                <button class="btn" [disabled]="studentForm.invalid">
                     Login
                 </button>
             </form>
