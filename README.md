@@ -9,8 +9,9 @@ This project is the frontend part of a comprehensive university schedule managem
 - **Admin Features**:
   - Manage faculty schedules, lecture times, and halls.
   - View, edit, and add courses.
+  - - View, edit, and add departments.
   - Manage student grades and records.
-  - Create schedules for different levels and departments.
+  - Edit schedules for different levels and departments.
   - Identify scheduling conflicts (e.g., hall or teacher availability).
   - Notify doctors (teachers) via email for course time edits.
 
@@ -43,15 +44,6 @@ This project is the frontend part of a comprehensive university schedule managem
 
 4. **Access the application**:
     Open your browser and navigate to `http://localhost:4200`.
-
-## Project Structure
-
-- **src/app**: Contains the main application code.
-  - **components**: Contains reusable components.
-  - **services**: Contains service classes for API interactions.
-  - **models**: Contains data models used in the application.
-  - **pages**: Contains different pages/views of the application.
-  - **utils**: Contains utility functions and helpers.
 
 ## Usage
 
