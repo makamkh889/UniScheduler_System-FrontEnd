@@ -71,7 +71,7 @@ This project is the frontend part of a comprehensive university schedule managem
 
 - **Frontend**: Angular, TypeScript, HTML, CSS
 - **Backend**: .NET API (see backend repository for details)
-- ![](https://drive.google.com/file/d/1TQZRHDVTkMbALwgzwUGeoRVXY1D-WOvM/view?usp=sharing)
-- ![](https://drive.google.com/file/d/151jvorTglxYBa949ZaK_h3bXK0bCEK_8/view?usp=sharing)
-- ![Alt text](https://drive.google.com/file/d/1Hsj38zRktb4kIhxhRAn8jP2bYOV7XQ8x/view?usp=sharing)
-![Alt text](https://drive.google.com/file/d/1QwqIg6uTpwwom9wpnSZVNz4uUx2wInbx/view?usp=sharing)
+![](https://drive.google.com/file/d/1TQZRHDVTkMbALwgzwUGeoRVXY1D-WOvM/view?usp=sharing)
+![](https://drive.google.com/file/d/151jvorTglxYBa949ZaK_h3bXK0bCEK_8/view?usp=sharing)
+![](https://drive.google.com/file/d/1Hsj38zRktb4kIhxhRAn8jP2bYOV7XQ8x/view?usp=sharing)
+![](https://drive.google.com/file/d/1QwqIg6uTpwwom9wpnSZVNz4uUx2wInbx/view?usp=sharing)
