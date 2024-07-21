@@ -1,27 +1,74 @@
-# FCIScheduling
+# University Schedule Management System - Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.7.
+## Overview
 
-## Development server
+This project is the frontend part of a comprehensive university schedule management system. The system aims to facilitate the management of faculty schedules, lecture times, halls, teacher schedules, and student courses. It is built using Angular and connects to a .NET API backend.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Features
 
-## Code scaffolding
+- **Admin Features**:
+  - Manage faculty schedules, lecture times, and halls.
+  - View, edit, and add courses.
+  - Manage student grades and records.
+  - Create schedules for different levels and departments.
+  - Identify scheduling conflicts (e.g., hall or teacher availability).
+  - Notify doctors (teachers) via email for course time edits.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Doctor (Teacher) Features**:
+  - View student enrollment numbers for their courses.
+  - Manage course times.
+  - View their schedules.
 
-## Build
+- **Student Features**:
+  - Enroll in courses.
+  - View their schedules for the semester.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Setup and Installation
 
-## Running unit tests
+1. **Clone the repository**:
+    ```sh
+    git clone https://github.com/yourusername/university-schedule-frontend.git
+    cd university-schedule-frontend
+    ```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+2. **Install dependencies**:
+    ```sh
+    npm install
+    ```
 
-## Running end-to-end tests
+3. **Run the application**:
+    ```sh
+    ng serve
+    ```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+4. **Access the application**:
+    Open your browser and navigate to `http://localhost:4200`.
 
-## Further help
+## Project Structure
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- **src/app**: Contains the main application code.
+  - **components**: Contains reusable components.
+  - **services**: Contains service classes for API interactions.
+  - **models**: Contains data models used in the application.
+  - **pages**: Contains different pages/views of the application.
+  - **utils**: Contains utility functions and helpers.
+
+## Usage
+
+### Admin
+- Log in with admin credentials.
+- Navigate to the dashboard to manage schedules, courses, and student records.
+
+### Doctor (Teacher)
+- Log in with your credentials.
+- View and manage your course times and schedules.
+
+### Student
+- Log in with your credentials.
+- Enroll in courses and view your semester schedule.
+
+## Technologies Used
+
+- **Frontend**: Angular, TypeScript, HTML, CSS
+- **Backend**: .NET API (see backend repository for details)
+
